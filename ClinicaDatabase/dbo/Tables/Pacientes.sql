@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Pacientes]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [Nome] NVARCHAR(50) NOT NULL, 
+    [CreatedDate] DATETIME2 NULL, 
+    [UpdatedDate] DATETIME2 NULL
+)
