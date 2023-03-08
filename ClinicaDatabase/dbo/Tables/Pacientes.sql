@@ -1,7 +1,9 @@
 ﻿CREATE TABLE [dbo].[Pacientes]
 (
 	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
-    [Nome] NVARCHAR(50) NOT NULL, 
+    [Name] NVARCHAR(50) NOT NULL, 
     [CreatedDate] DATETIME2 NULL, 
-    [UpdatedDate] DATETIME2 NULL
+    [UpdatedDate] DATETIME2 NULL, 
+    [ClinicaId] UNIQUEIDENTIFIER NULL,
+    FOREIGN KEY (ClinicaId) REFERENCES Clinicas(Id) ON DELETE CASCADE
 )
