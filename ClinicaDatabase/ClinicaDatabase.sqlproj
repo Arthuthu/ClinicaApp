@@ -60,11 +60,27 @@
     <Folder Include="dbo\Tables" />
     <Folder Include="dbo\StoredProcedures" />
     <Folder Include="PublishLocations\" />
+    <Folder Include="dbo\StoredProcedures\Clinica" />
+    <Folder Include="dbo\StoredProcedures\Paciente" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Pacientes.sql" />
+    <Build Include="dbo\Tables\Clinicas.sql" />
+    <Build Include="dbo\StoredProcedures\Clinica\spClinica_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\Clinica\spClinica_GetById.sql" />
+    <Build Include="dbo\StoredProcedures\Clinica\spClinica_Add.sql" />
+    <Build Include="dbo\StoredProcedures\Clinica\spClinica_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\Clinica\spClinica_Update.sql" />
+    <Build Include="dbo\StoredProcedures\Paciente\spPaciente_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\Paciente\spPaciente_GetById.sql" />
+    <Build Include="dbo\StoredProcedures\Paciente\spPaciente_Add.sql" />
+    <Build Include="dbo\StoredProcedures\Paciente\spPaciente_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\Paciente\spPaciente_Update.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishLocations\ClinicaDatabase.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="ClinicaDatabase.refactorlog" />
   </ItemGroup>
 </Project>
