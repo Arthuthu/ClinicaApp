@@ -1,25 +1,99 @@
+using ClinicaRepository.Classes;
+using ClinicaRepository.Interfaces;
+using ClinicaRepository.SqlDataAccess;
+using ClinicaService.Classes;
+using ClinicaService.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//Cors
+builder.Services.AddCors(policy =>
+{
+	policy.AddPolicy("OpenCorsPolicy", opt =>
+		opt
+		.AllowAnyOrigin()
+		.AllowAnyHeader()
+		.AllowAnyMethod());
+});
+
+//Dependency Injection
+builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
+
+//Repositories
+builder.Services.AddSingleton<IClinicaClassRepository, ClinicaClassRepository>();
+
+//Services
+builder.Services.AddSingleton<IClinicaClassService, ClinicaClassService>();
+
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+//SwaggerGen
+builder.Services.AddSwaggerGen(x =>
+{
+	x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+	{
+		Description = "JWT Authorization header using the bearer scheme",
+		Name = "Authorization",
+		In = ParameterLocation.Header,
+		Type = SecuritySchemeType.ApiKey
+	});
+	x.AddSecurityRequirement(new OpenApiSecurityRequirement
+	{
+		{new OpenApiSecurityScheme{Reference = new OpenApiReference
+		{
+			Id = "Bearer",
+			Type = ReferenceType.SecurityScheme
+		}}, new List<string>()}
+	});
+});
+
+//Authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+	.AddJwtBearer(
+		options =>
+		{
+			options.TokenValidationParameters = new TokenValidationParameters
+			{
+				ValidateIssuerSigningKey = true,
+				IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+					.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
+				ValidateIssuer = false,
+				ValidateAudience = false
+			};
+		});
+
+// Authorization
+builder.Services.AddAuthorization(options =>
+{
+	options.FallbackPolicy = new AuthorizationPolicyBuilder()
+	.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+	.RequireAuthenticatedUser()
+	.Build();
+});
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-	app.UseSwagger();
-	app.UseSwaggerUI();
-}
-
+// Configure
 app.UseHttpsRedirection();
+app.UseCors("OpenCorsPolicy");
 
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+

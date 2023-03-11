@@ -1,0 +1,22 @@
+﻿<div>
+	<EditForm Model="model" OnValidSubmit="ExecuteLogin">
+		<div>
+			<div>
+				<InputText placeholder="Usuario"></InputText>
+			</div>
+		</div>
+		<div>
+			<div>
+				<InputText placeholder="Senha"></InputText>
+			</div>
+		</div>
+	</EditForm>
+</div>
+@code {
+	private ClinicaModel model = new();
+
+	private async Task ExecuteLogin()
+	{
+		
+	}
+}

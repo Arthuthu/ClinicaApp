@@ -1,4 +1,5 @@
-﻿using ClinicaRepository.Models;
+﻿using ClinicaRepository.Interfaces;
+using ClinicaRepository.Models;
 using ClinicaRepository.SqlDataAccess;
 
 namespace ClinicaRepository.Classes;
@@ -61,6 +62,6 @@ public class PacienteRepository : IPacienteRepository
 
 	public Task DeleteUser(Guid id)
 	{
-		return _db.SaveData("dbo.spUser_Delete", new { Id = id });
+		return _db.SaveData("dbo.spPaciente_Delete", new { Id = id });
 	}
 }
