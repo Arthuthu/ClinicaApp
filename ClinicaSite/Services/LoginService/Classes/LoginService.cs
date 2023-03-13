@@ -33,7 +33,7 @@ public class LoginService
 	{
 		var data = new FormUrlEncodedContent(new[]
 		{
-			new KeyValuePair<string, string>("user", userForAuthentication.User),
+			new KeyValuePair<string, string>("user", userForAuthentication.Username),
 			new KeyValuePair<string, string>("password", userForAuthentication.Password)
 		});
 

@@ -27,6 +27,15 @@ public class ClinicaClassRepository : IClinicaClassRepository
 		return results.FirstOrDefault();
 	}
 
+	public async Task<ClinicaModel?> GetClinicaByName(ClinicaModel clinica)
+	{
+		var results = await _db.LoadData<ClinicaModel, dynamic>(
+			"dbo.spClinicas_GetByUsername",
+			new { Username = clinica.Username });
+
+		return results.FirstOrDefault();
+	}
+
 	public Task CreateClinica(ClinicaModel clinica)
 	{
 		return _db.SaveData("dbo.spClinicas_Add",
@@ -34,7 +43,7 @@ public class ClinicaClassRepository : IClinicaClassRepository
 		{
 			clinica.Id,
 			clinica.Name,
-			clinica.User,
+			clinica.Username,
 			clinica.Password,
 			clinica.CreatedDate
 		});
@@ -46,7 +55,7 @@ public class ClinicaClassRepository : IClinicaClassRepository
 		{
 			clinica.Id,
 			clinica.Name,
-			clinica.User,
+			clinica.Username,
 			clinica.UpdatedDate
 		});
 

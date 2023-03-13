@@ -76,6 +76,7 @@
     <Build Include="dbo\StoredProcedures\Paciente\spPaciente_Add.sql" />
     <Build Include="dbo\StoredProcedures\Paciente\spPaciente_Delete.sql" />
     <Build Include="dbo\StoredProcedures\Paciente\spPaciente_Update.sql" />
+    <Build Include="dbo\StoredProcedures\Clinica\spClinica_GetByName.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishLocations\ClinicaDatabase.publish.xml" />

@@ -8,6 +8,8 @@ namespace ClinicaRepository.Interfaces
         Task DeleteClinica(Guid id);
         Task<IEnumerable<ClinicaModel>> GetAllClinicas();
         Task<ClinicaModel?> GetClinicaById(Guid id);
-        Task UpdateClinica(ClinicaModel clinica);
+        Task<ClinicaModel?> GetClinicaByName(ClinicaModel clinica);
+
+		Task UpdateClinica(ClinicaModel clinica);
     }
 }

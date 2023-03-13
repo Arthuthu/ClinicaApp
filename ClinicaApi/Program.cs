@@ -1,10 +1,15 @@
 using ClinicaRepository.Classes;
 using ClinicaRepository.Interfaces;
+using ClinicaRepository.Models;
 using ClinicaRepository.SqlDataAccess;
 using ClinicaService.Classes;
 using ClinicaService.Interfaces;
+using ClinicaService.Validators;
+using ClinicaService.Validators.Interfaces;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -29,6 +34,10 @@ builder.Services.AddSingleton<IClinicaClassRepository, ClinicaClassRepository>()
 
 //Services
 builder.Services.AddSingleton<IClinicaClassService, ClinicaClassService>();
+
+//Validators / MessageHandler
+builder.Services.AddSingleton<IMessageHandler, MessageHandler>();
+builder.Services.AddSingleton<IValidator<ClinicaModel>, ClinicaValidator>();
 
 builder.Services.AddEndpointsApiExplorer();
 
