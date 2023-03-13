@@ -1,16 +1,33 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
+<div>
     <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
+        <navbar class="navbar">
+            <div class="logo">
+                Clinica
+            </div>
+            <div class="nav-links-div">
+                <AuthorizeView>
+                    <Authorized>
+                        <a class="nav-link">
+                            @context.User.FindFirst(ClaimTypes.Name)?.Value
+                        </a>
+                        <NavLink class="nav-link" href="logout">
+                            <span class="oi oi-account-logout">Sair</span>
+                        </NavLink>
+                    </Authorized>
+                    <NotAuthorized>
+                        <NavLink class="nav-link" href="login">
+                            <span class="oi oi-account-logout">Entrar</span>
+                        </NavLink>
+                        <NavLink class="nav-link" href="register">
+                            <span class="oi oi-account-logout">Registrar</span>
+                        </NavLink>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+        </navbar>
+        <article>
             @Body
         </article>
     </main>

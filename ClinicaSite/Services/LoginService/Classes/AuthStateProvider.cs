@@ -5,14 +5,14 @@ using System.Security.Claims;
 
 namespace ClinicaSite.Services.LoginService.Classes;
 
-public class LoginStateProvider : AuthenticationStateProvider
+public class AuthStateProvider : AuthenticationStateProvider
 {
 	private readonly HttpClient _httpClient;
 	private readonly ILocalStorageService _localStorage;
 	private readonly IConfiguration _config;
 	private readonly AuthenticationState _anonymous;
 
-	public LoginStateProvider(HttpClient httpClient,
+	public AuthStateProvider(HttpClient httpClient,
 		ILocalStorageService localStorage,
 		IConfiguration config)
 	{

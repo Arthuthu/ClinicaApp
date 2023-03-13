@@ -1,12 +1,13 @@
 ﻿using Blazored.LocalStorage;
 using ClinicaSite.Models;
+using ClinicaSite.Services.LoginService.Interfaces;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace ClinicaSite.Services.LoginService.Classes;
 
-public class LoginService
+public class LoginService : ILoginService
 {
 	private readonly HttpClient _client;
 	private readonly AuthenticationStateProvider _authStateProvider;
@@ -53,7 +54,7 @@ public class LoginService
 
 		await _localStorage.SetItemAsync(authTokenStorageKey, result.Access_Token);
 
-		((LoginStateProvider)_authStateProvider).NotifyUserAuthentication(result.Access_Token);
+		((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.Access_Token);
 
 		_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer",
 			result.Access_Token);
@@ -64,7 +65,7 @@ public class LoginService
 	public async Task Logout()
 	{
 		await _localStorage.RemoveItemAsync(authTokenStorageKey);
-		((LoginStateProvider)_authStateProvider).NotifyUserLogout();
+		((AuthStateProvider)_authStateProvider).NotifyUserLogout();
 		_client.DefaultRequestHeaders.Authorization = null;
 	}
 }
