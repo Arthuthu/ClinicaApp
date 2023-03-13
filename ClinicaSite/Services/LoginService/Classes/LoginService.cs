@@ -29,7 +29,7 @@ public class LoginService
 		authTokenStorageKey = _config["authTokenStorageKey"];
 	}
 
-	public async Task<ClinicaModel> Login(ClinicaModel userForAuthentication)
+	public async Task<AuthenticatedUserModel> Login(AuthenticationUserModel userForAuthentication)
 	{
 		var data = new FormUrlEncodedContent(new[]
 		{
@@ -53,7 +53,7 @@ public class LoginService
 
 		await _localStorage.SetItemAsync(authTokenStorageKey, result.Access_Token);
 
-		((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.Access_Token);
+		((LoginStateProvider)_authStateProvider).NotifyUserAuthentication(result.Access_Token);
 
 		_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer",
 			result.Access_Token);
@@ -64,7 +64,7 @@ public class LoginService
 	public async Task Logout()
 	{
 		await _localStorage.RemoveItemAsync(authTokenStorageKey);
-		((AuthStateProvider)_authStateProvider).NotifyUserLogout();
+		((LoginStateProvider)_authStateProvider).NotifyUserLogout();
 		_client.DefaultRequestHeaders.Authorization = null;
 	}
 }
