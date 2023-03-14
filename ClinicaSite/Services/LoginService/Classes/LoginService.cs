@@ -34,7 +34,7 @@ public class LoginService : ILoginService
 	{
 		var data = new FormUrlEncodedContent(new[]
 		{
-			new KeyValuePair<string, string>("user", userForAuthentication.Username),
+			new KeyValuePair<string, string>("username", userForAuthentication.Username),
 			new KeyValuePair<string, string>("password", userForAuthentication.Password)
 		});
 

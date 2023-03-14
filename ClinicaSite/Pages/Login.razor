@@ -1,23 +1,69 @@
 ﻿@page "/login"
-<div>
-	<EditForm Model="model" OnValidSubmit="ExecuteLogin">
+@inject ILoginService authService
+@inject NavigationManager navManager
+
+<EditForm Model="model" OnValidSubmit="ExecuteLogin">
+	<div class="iniciar-sessao-box">
+		<div class="iniciar-sessao-label">
+			<p>Inicial sessão</p>
+		</div>
+
 		<div>
+			<label for="username" class="visually-hidden">Usuario</label>
 			<div>
-				<InputText placeholder="Usuario"></InputText>
+				<InputText id="username" class="form-input-text" @bind-Value="model.Username" placeholder="Usuario" />
 			</div>
 		</div>
+
 		<div>
 			<div>
-				<InputText placeholder="Senha"></InputText>
+				<label for="password" class="visually-hidden">Senha</label>
+				<InputText type="password" id="password" class="form-input-text" @bind-Value="model.Password" placeholder="Senha" />
 			</div>
 		</div>
-	</EditForm>
+
+		<div>
+			<button type="submit" class="login-button">Entrar</button>
+		</div>
+	</div>
+</EditForm>
+
+<div class="registre-se-aqui-div">
+	<div class="registre-se-aqui-div-p">
+		<p>Não possui uma conta?</p>
+	</div>
+	<div>
+		<a class="registre-se-aqui-button" href="register">Registre-se aqui</a>
+	</div>
 </div>
+
+@if (showAuthenticationError)
+{
+	<div role="alert" class="alert-message-div">
+		<p class="alert-message">@authenticationErrorText</p>
+	</div>
+}
+
 @code {
-	private ClinicaModel model = new();
+	private AuthenticationUserModel model = new();
+
+	private bool showAuthenticationError = false;
+	private string authenticationErrorText = "";
 
 	private async Task ExecuteLogin()
 	{
-		
+		showAuthenticationError = false;
+
+		var result = await authService.Login(model);
+
+		if (result is not null)
+		{
+			navManager.NavigateTo("/");
+		}
+		else
+		{
+			authenticationErrorText = "Usuario ou senha incorretos";
+			showAuthenticationError = true;
+		}
 	}
 }
