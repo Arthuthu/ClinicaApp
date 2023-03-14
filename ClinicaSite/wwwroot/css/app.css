@@ -34,3 +34,53 @@
     cursor: pointer;
     color: #808080;
 }
+
+/* Registration */
+
+.registration-form-box {
+    text-align: center;
+    max-width: 50%;
+    margin: 20px 0 0 25%;
+    border: solid #1BA300;
+    border-radius: 10px;
+}
+
+.criar-conta-label {
+    background-image: linear-gradient(#1BA300, #22CF00);
+    font-size: 30px;
+    font-weight: bold;
+    color: #FFF;
+    margin: 0 0 10px 0;
+    padding: 20px;
+}
+
+.criar-conta-label > p {
+    margin: 0;
+}
+
+.form-input-text {
+    border: 0 #808080;
+    border-bottom: groove;
+    margin: 0 0 20px 0;
+    font-size: 25px;
+}
+
+.form-input-text:focus {
+    outline: none;
+}
+
+.registrar-button {
+    background-color: #22CF00;
+    color: #FFF;
+    border-color: transparent;
+    border-radius: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin: 10px 0;
+}
+
+    .registrar-button:hover {
+        transition: 500ms;
+        background-color: #1BA300;
+    }

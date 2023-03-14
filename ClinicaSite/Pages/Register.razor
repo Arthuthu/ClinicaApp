@@ -1,0 +1,63 @@
+﻿@page "/register"
+@inject IRegistrationService registrationService
+@inject NavigationManager navManager
+
+<EditForm Model="model" OnValidSubmit="ExecuteRegister">
+	<div class="registration-form-box">
+		<div class="criar-conta-label">
+			<p>Criar conta</p>
+		</div>
+
+		<div>
+			<label for="username" class="visually-hidden">Usuario</label>
+			<div>
+				<InputText id="username" class="form-input-text" @bind-Value="model.Username" placeholder="Usuario" />
+			</div>
+		</div>
+
+		<div>
+			<div>
+				<label for="password" class="visually-hidden">Senha</label>
+				<InputText type="password" id="password" class="form-input-text" @bind-Value="model.Password" placeholder="Senha" />
+			</div>
+		</div>
+
+		<div>
+			<div>
+				<label for="confirmPassword" class="visually-hidden">Confirmar Senha</label>
+				<InputText type="password" id="confirmpassword" class="form-input-text" @bind-Value="model.ConfirmPassword" placeholder="Confirmar Senha" />
+			</div>
+		</div>
+
+		<div>
+			<button type="submit" class="registrar-button">Registrar</button>
+		</div>
+	</div>
+</EditForm>
+
+@code {
+	private RegistrationModel model = new();
+
+	private string registrationMessage = "";
+	private string messageWhenRegistrationIsSuccessfull = "Usuario registrado com sucesso";
+
+	private async Task ExecuteRegister()
+	{
+		if (model.Password != model.ConfirmPassword)
+		{
+			registrationMessage = "As senhas não coincidem.";
+			return;
+		}
+
+		var result = await registrationService.RegisterUser(model);
+
+		registrationMessage = result;
+		StateHasChanged();
+
+		if (registrationMessage == messageWhenRegistrationIsSuccessfull)
+		{
+			await Task.Delay(2000);
+			navManager.NavigateTo("/login");
+		}
+	}
+}
