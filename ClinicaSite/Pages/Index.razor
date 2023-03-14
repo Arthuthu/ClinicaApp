@@ -1,9 +1,31 @@
 ﻿@page "/"
+@inject IUserDataService userDataService
+@inject NavigationManager navManager
 
-<PageTitle>Index</PageTitle>
+@if(LoggedInUserId != Guid.Empty)
+{
+	@LoggedInUserId
+}
+else
+{
+	<p>Usuario não esta logado</p>
+}
 
-<h1>Hello, world!</h1>
+@code {
+	private Guid LoggedInUserId { get; set; }
 
-Welcome to your new app.
+	protected override async Task OnInitializedAsync()
+	{
+		await GetLoggedInUserId();
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+		if (LoggedInUserId == Guid.Empty)
+		{
+			navManager.NavigateTo("/login");
+		}
+	}
+
+	private async Task GetLoggedInUserId()
+	{
+		LoggedInUserId = await userDataService.GetLoggedInUserId();
+	}
+}
