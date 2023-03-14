@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spClinica_Add]
+﻿CREATE PROCEDURE [dbo].[spPaciente_Add]
 	@Id uniqueidentifier,
 	@Name nvarchar(50),
 	@Username nvarchar(50),
