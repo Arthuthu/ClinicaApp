@@ -1,5 +1,36 @@
 ﻿@page "/cadastro"
 
-@code {
+<EditForm Model="model" OnValidSubmit="ExecuteCadastro">
+	<div class="iniciar-sessao-box">
+		<div class="iniciar-sessao-label">
+			<p>Inicial sessão</p>
+		</div>
 
+		<div>
+			<label for="nome" class="visually-hidden">Nome</label>
+			<div>
+				<InputText id="nome" class="form-input-text" @bind-Value="model.Nome" placeholder="Usuario" />
+			</div>
+		</div>
+
+		<div>
+			<div>
+				<label for="sobrenome" class="visually-hidden">Senha</label>
+				<InputText id="sobrenome" class="form-input-text" @bind-Value="model.Sobrenome" placeholder="Senha" />
+			</div>
+		</div>
+
+		<div>
+			<button type="submit" class="login-button">Cadastrar</button>
+		</div>
+	</div>
+</EditForm>
+
+@code {
+	private PacienteModel model = new();
+
+	private async Task ExecuteCadastro()
+	{
+		
+	}
 }
