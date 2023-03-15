@@ -5,7 +5,7 @@ namespace ClinicaRepository.Interfaces
     public interface IPacienteRepository
     {
         Task AddPaciente(PacienteModel paciente);
-        Task DeleteUser(Guid id);
+        Task DeletePaciente(Guid id);
         Task<IEnumerable<PacienteModel>> GetAllPacientes();
         Task<PacienteModel?> GetPacientesByName(PacienteModel paciente);
         Task<PacienteModel?> GetPacientesId(Guid id);

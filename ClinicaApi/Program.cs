@@ -38,6 +38,8 @@ builder.Services.AddSingleton<IClinicaClassService, ClinicaClassService>();
 //Validators / MessageHandler
 builder.Services.AddSingleton<IMessageHandler, MessageHandler>();
 builder.Services.AddSingleton<IValidator<ClinicaModel>, ClinicaValidator>();
+builder.Services.AddSingleton<IValidator<PacienteModel>, PacienteValidator>();
+
 
 builder.Services.AddEndpointsApiExplorer();
 

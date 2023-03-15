@@ -31,7 +31,7 @@ public class PacienteRepository : IPacienteRepository
 	{
 		var results = await _db.LoadData<PacienteModel, dynamic>(
 			"dbo.spPacientes_GetByName",
-			new { Username = paciente.Name });
+			new { Username = paciente.Nome });
 
 		return results.FirstOrDefault();
 	}
@@ -41,26 +41,46 @@ public class PacienteRepository : IPacienteRepository
 		return _db.SaveData("dbo.spPacientes_Add",
 		new
 		{
-			paciente.Id,
-			paciente.Name,
-			paciente.LastName,
-			paciente.CreatedDate
-		});
+            paciente.Id,
+            paciente.Nome,
+            paciente.Sobrenome,
+            paciente.CPF,
+            paciente.CEP,
+            paciente.Estado,
+            paciente.Cidade,
+            paciente.Rua,
+            paciente.Bairro,
+            paciente.NumeroRua,
+            paciente.Email,
+            paciente.Cel,
+            paciente.CreatedDate,
+            paciente.ClinicaId
+        });
 	}
 
 	public Task UpdatePaciente(PacienteModel paciente)
 	{
 		return _db.SaveData("dbo.spPaciente_Update", new
 		{
-			paciente.Id,
-			paciente.Name,
-			paciente.LastName,
-			paciente.UpdatedDate
-		});
+            paciente.Id,
+            paciente.Nome,
+            paciente.Sobrenome,
+            paciente.CPF,
+            paciente.CEP,
+            paciente.Estado,
+            paciente.Cidade,
+            paciente.Rua,
+            paciente.Bairro,
+            paciente.NumeroRua,
+            paciente.Email,
+            paciente.Cel,
+            paciente.UpdatedDate,
+            paciente.ClinicaId
+        });
 
 	}
 
-	public Task DeleteUser(Guid id)
+	public Task DeletePaciente(Guid id)
 	{
 		return _db.SaveData("dbo.spPaciente_Delete", new { Id = id });
 	}

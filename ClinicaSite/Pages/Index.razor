@@ -1,31 +1,24 @@
 ﻿@page "/"
-@inject IUserDataService userDataService
-@inject NavigationManager navManager
+@inject NavigationManager navManager;
+@inject IUserDataService userDataService;
 
-@if(LoggedInUserId != Guid.Empty)
-{
-	@LoggedInUserId
-}
-else
-{
-	<p>Usuario não esta logado</p>
-}
+<p>O seu id é: @LoggedInUserId</p>
 
 @code {
-	private Guid LoggedInUserId { get; set; }
+    private Guid LoggedInUserId { get; set; }
 
-	protected override async Task OnInitializedAsync()
-	{
-		await GetLoggedInUserId();
+    protected override async Task OnInitializedAsync()
+    {
+        await GetLoggedInUserId();
 
-		if (LoggedInUserId == Guid.Empty)
-		{
-			navManager.NavigateTo("/login");
-		}
-	}
+        if (LoggedInUserId == Guid.Empty)
+        {
+            navManager.NavigateTo("/login");
+        }
+    }
 
-	private async Task GetLoggedInUserId()
-	{
-		LoggedInUserId = await userDataService.GetLoggedInUserId();
-	}
+    private async Task GetLoggedInUserId()
+    {
+        LoggedInUserId = await userDataService.GetLoggedInUserId();
+    }
 }

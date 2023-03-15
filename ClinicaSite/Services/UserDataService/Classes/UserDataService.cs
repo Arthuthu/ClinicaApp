@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
 
 namespace ClinicaSite.Services.UserDataService.Classes;
-
 public class UserDataService : IUserDataService
 {
 	private readonly AuthenticationStateProvider _authenticationStateProvider;
@@ -12,7 +11,6 @@ public class UserDataService : IUserDataService
 	{
 		_authenticationStateProvider = authenticationStateProvider;
 	}
-
 	public async Task<Guid> GetLoggedInUserId()
 	{
 		var authenticationState = await _authenticationStateProvider.GetAuthenticationStateAsync();
