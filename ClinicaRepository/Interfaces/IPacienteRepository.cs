@@ -9,6 +9,8 @@ namespace ClinicaRepository.Interfaces
         Task<IEnumerable<PacienteModel>> GetAllPacientes();
         Task<PacienteModel?> GetPacientesByName(PacienteModel paciente);
         Task<PacienteModel?> GetPacientesId(Guid id);
-        Task UpdatePaciente(PacienteModel paciente);
+        Task<PacienteModel?> GetPacienteByCPF(Guid clinicaId, string CPF);
+
+		Task UpdatePaciente(PacienteModel paciente);
     }
 }

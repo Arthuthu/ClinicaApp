@@ -27,6 +27,15 @@ public class PacienteRepository : IPacienteRepository
 		return results.FirstOrDefault();
 	}
 
+	public async Task<PacienteModel?> GetPacienteByCPF(Guid clinicaId, string CPF)
+	{
+		var results = await _db.LoadData<PacienteModel, dynamic>(
+			"dbo.spPaciente_GetByCPF",
+			new { clinicaId = clinicaId, CPF = CPF });
+
+		return results.FirstOrDefault();
+	}
+
 	public async Task<PacienteModel?> GetPacientesByName(PacienteModel paciente)
 	{
 		var results = await _db.LoadData<PacienteModel, dynamic>(

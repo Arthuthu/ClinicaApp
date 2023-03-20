@@ -38,6 +38,14 @@ public class PacienteService : IPacienteService
 			return registrationMessages;
 		}
 
+		var isPacienteRegistered = await VerifiyIfCPFIsRegistered(paciente.ClinicaId, paciente.CPF);
+
+		if (isPacienteRegistered is true)
+		{
+			registrationMessages.Add("O cliente ja tem CPF cadastrado");
+			return registrationMessages;
+		}
+
 		paciente.Id = Guid.NewGuid();
 		paciente.CreatedDate = DateTime.UtcNow.AddHours(-3);
 
@@ -63,5 +71,17 @@ public class PacienteService : IPacienteService
 	public Task Deletepaciente(Guid id)
 	{
 		return _pacienteRepository.DeletePaciente(id);
+	}
+
+	private async Task<bool> VerifiyIfCPFIsRegistered(Guid clinicaId, string CPF)
+	{
+		var paciente = await _pacienteRepository.GetPacienteByCPF(clinicaId, CPF);
+
+		if (paciente is null)
+		{
+			return false;
+		}
+
+		return true;
 	}
 }

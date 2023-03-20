@@ -3,6 +3,14 @@
 @inject IUserDataService userDataService;
 @inject IPacienteService pacienteService;
 
+@if (ShowErrorMessages)
+{
+	<div>
+		<p>@ErrorMessages</p>
+	</div>
+}
+
+
 <EditForm Model="model" OnValidSubmit="ExecuteCadastro">
 	<div>
 		<div>
@@ -86,6 +94,8 @@
 @code {
 	private PacienteModel model = new();
 	private Guid LoggedInUserId { get; set; }
+	private string? ErrorMessages = "";
+	private bool ShowErrorMessages = false;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -105,7 +115,12 @@
 	private async Task ExecuteCadastro()
 	{
 		model.ClinicaId = LoggedInUserId;
-		await pacienteService.RegisterPaciente(model);
+		ErrorMessages = await pacienteService.RegisterPaciente(model);
+
+		if (ErrorMessages != "Paciente criado com sucesso")
+		{
+			ShowErrorMessages = true;
+		}
 
 		await OnInitializedAsync();
 	}
