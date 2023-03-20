@@ -1,7 +1,11 @@
 /* Navbar */
 
+:root {
+    --main-background-color: #1BA300;
+}
+
 .navbar {
-    background-image: linear-gradient(#1BA300, #22CF00);
+    background-color: var(--main-background-color);
     display: flex;
     color: white;
     justify-content: space-between;
@@ -27,6 +31,8 @@
 .logo {
     font-size: 40px;
     font-weight: bold;
+    text-decoration: none;
+    color: #FFF;
 }
 
 .logo:hover {

@@ -31,9 +31,13 @@ builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
 
 //Repositories
 builder.Services.AddSingleton<IClinicaClassRepository, ClinicaClassRepository>();
+builder.Services.AddSingleton<IPacienteRepository, PacienteRepository>();
+
 
 //Services
 builder.Services.AddSingleton<IClinicaClassService, ClinicaClassService>();
+builder.Services.AddSingleton<IPacienteService, PacienteService>();
+
 
 //Validators / MessageHandler
 builder.Services.AddSingleton<IMessageHandler, MessageHandler>();

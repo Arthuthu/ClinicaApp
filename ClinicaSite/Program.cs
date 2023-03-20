@@ -2,6 +2,8 @@ using Blazored.LocalStorage;
 using ClinicaSite;
 using ClinicaSite.Services.LoginService.Classes;
 using ClinicaSite.Services.LoginService.Interfaces;
+using ClinicaSite.Services.PacienteService.Classes;
+using ClinicaSite.Services.PacienteService.Interfaces;
 using ClinicaSite.Services.RegistrationService.Classes;
 using ClinicaSite.Services.RegistrationService.Interfaces;
 using ClinicaSite.Services.UserDataService.Classes;
@@ -18,6 +20,8 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<IUserDataService, UserDataService>();
+builder.Services.AddScoped<IPacienteService, PacienteService>();
+
 builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
 
 builder.Services.AddBlazoredLocalStorage();

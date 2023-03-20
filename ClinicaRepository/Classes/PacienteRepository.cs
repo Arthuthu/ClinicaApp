@@ -15,13 +15,13 @@ public class PacienteRepository : IPacienteRepository
 
 	public Task<IEnumerable<PacienteModel>> GetAllPacientes()
 	{
-		return _db.LoadData<PacienteModel, dynamic>("dbo.spPacientes_GetAll", new { });
+		return _db.LoadData<PacienteModel, dynamic>("dbo.spPaciente_GetAll", new { });
 	}
 
 	public async Task<PacienteModel?> GetPacientesId(Guid id)
 	{
 		var results = await _db.LoadData<PacienteModel, dynamic>(
-			"dbo.spPacientes_GetById",
+			"dbo.spPaciente_GetById",
 			new { Id = id });
 
 		return results.FirstOrDefault();
@@ -30,7 +30,7 @@ public class PacienteRepository : IPacienteRepository
 	public async Task<PacienteModel?> GetPacientesByName(PacienteModel paciente)
 	{
 		var results = await _db.LoadData<PacienteModel, dynamic>(
-			"dbo.spPacientes_GetByName",
+			"dbo.spPaciente_GetByName",
 			new { Username = paciente.Nome });
 
 		return results.FirstOrDefault();
@@ -38,7 +38,7 @@ public class PacienteRepository : IPacienteRepository
 
 	public Task AddPaciente(PacienteModel paciente)
 	{
-		return _db.SaveData("dbo.spPacientes_Add",
+		return _db.SaveData("dbo.spPaciente_Add",
 		new
 		{
             paciente.Id,

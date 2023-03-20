@@ -1,36 +1,112 @@
 ﻿@page "/cadastro"
+@inject NavigationManager navManager;
+@inject IUserDataService userDataService;
+@inject IPacienteService pacienteService;
 
 <EditForm Model="model" OnValidSubmit="ExecuteCadastro">
-	<div class="iniciar-sessao-box">
-		<div class="iniciar-sessao-label">
-			<p>Inicial sessão</p>
+	<div>
+		<div>
+			<p>Cadastrar cliente</p>
+		</div>
+
+		<div>
+			<p>
+				Dados cadastrais
+			</p>
 		</div>
 
 		<div>
 			<label for="nome" class="visually-hidden">Nome</label>
 			<div>
-				<InputText id="nome" class="form-input-text" @bind-Value="model.Nome" placeholder="Usuario" />
+				<InputText id="nome" class="form-input-text" @bind-Value="model.Nome" placeholder="Nome" />
+			</div>
+
+			<div>
+				<label for="sobrenome" class="visually-hidden">Sobrenome</label>
+				<InputText id="sobrenome" class="form-input-text" @bind-Value="model.Sobrenome" placeholder="Sobrenome" />
+			</div>
+
+			<div>
+				<label for="cpf" class="visually-hidden">CPF</label>
+				<InputText id="cpf" class="form-input-text" @bind-Value="model.CPF" placeholder="CPF" />
+			</div>
+
+			<div>
+				<label for="cel" class="visually-hidden">Celular</label>
+				<InputText id="cel" class="form-input-text" @bind-Value="model.Cel" placeholder="Celular" />
+			</div>
+
+			<div>
+				<label for="email" class="visually-hidden">Email</label>
+				<InputText id="email" class="form-input-text" @bind-Value="model.Email" placeholder="Email" />
 			</div>
 		</div>
 
+		<div>
+			<p>Endereço</p>
+		</div>
 		<div>
 			<div>
-				<label for="sobrenome" class="visually-hidden">Senha</label>
-				<InputText id="sobrenome" class="form-input-text" @bind-Value="model.Sobrenome" placeholder="Senha" />
+				<label for="cep" class="visually-hidden">CEP</label>
+				<InputText id="cep" class="form-input-text" @bind-Value="model.CEP" placeholder="CEP" />
+			</div>
+
+			<div>
+				<label for="estado" class="visually-hidden">Estado</label>
+				<InputText id="estado" class="form-input-text" @bind-Value="model.Estado" placeholder="Estado" />
+			</div>
+
+			<div>
+				<label for="cidade" class="visually-hidden">Cidade</label>
+				<InputText id="cidade" class="form-input-text" @bind-Value="model.Cidade" placeholder="Cidade" />
+			</div>
+
+			<div>
+				<label for="bairro" class="visually-hidden">Bairro</label>
+				<InputText id="bairro" class="form-input-text" @bind-Value="model.Bairro" placeholder="Bairro" />
+			</div>
+
+			<div>
+				<label for="rua" class="visually-hidden">Rua</label>
+				<InputText id="rua" class="form-input-text" @bind-Value="model.Rua" placeholder="Rua" />
+			</div>
+
+			<div>
+				<label for="numerorua" class="visually-hidden">NumeroRua</label>
+				<InputText id="numerorua" class="form-input-text" @bind-Value="model.NumeroRua" placeholder="Numero Rua" />
 			</div>
 		</div>
 
 		<div>
-			<button type="submit" class="login-button">Cadastrar</button>
+			<button type="submit" class="">Cadastrar</button>
 		</div>
 	</div>
 </EditForm>
 
 @code {
 	private PacienteModel model = new();
+	private Guid LoggedInUserId { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		await GetLoggedInUserId();
+
+		if (LoggedInUserId == Guid.Empty)
+		{
+			navManager.NavigateTo("/login");
+		}
+	}
+
+	private async Task GetLoggedInUserId()
+	{
+		LoggedInUserId = await userDataService.GetLoggedInUserId();
+	}
 
 	private async Task ExecuteCadastro()
 	{
-		
+		model.ClinicaId = LoggedInUserId;
+		await pacienteService.RegisterPaciente(model);
+
+		await OnInitializedAsync();
 	}
 }

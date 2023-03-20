@@ -12,5 +12,9 @@ public class ResponseProfile : Profile
 		CreateMap<ClinicaResponse, ClinicaModel>()
 			.IgnoreAllPropertiesWithAnInaccessibleSetter()
 			.ReverseMap();
+
+		CreateMap<PacienteResponse, PacienteModel>()
+			.IgnoreAllPropertiesWithAnInaccessibleSetter()
+			.ReverseMap();
 	}
 }

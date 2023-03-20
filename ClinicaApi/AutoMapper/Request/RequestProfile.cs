@@ -19,5 +19,9 @@ public class RequestProfile : Profile
 		CreateMap<ClinicaModel, LoginRequest>()
 			.IgnoreAllPropertiesWithAnInaccessibleSetter()
 			.ReverseMap();
+
+		CreateMap<PacienteModel, PacienteRequest>()
+			.IgnoreAllPropertiesWithAnInaccessibleSetter()
+			.ReverseMap();
 	}
 }
