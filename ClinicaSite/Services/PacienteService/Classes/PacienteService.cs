@@ -36,7 +36,24 @@ public class PacienteService : IPacienteService
         return pacienteModel;
     }
 
-    public async Task<string> RegisterPaciente(PacienteModel paciente)
+	public async Task<PacienteModel?> GetPacienteById(Guid pacienteId)
+	{
+		string getPacienteByIdEndpoint = _config["apiLocation"] + _config["getPacienteByIdEndpoint"] + $"/{pacienteId}";
+		var authResult = await _client.GetAsync(getPacienteByIdEndpoint);
+		var authContent = await authResult.Content.ReadAsStringAsync();
+
+		if (authResult.IsSuccessStatusCode is false)
+		{
+			_logger.LogInformation($"Ocorreu um erro durante o carregamento do paciente: {authContent}");
+			return null;
+		}
+
+		var pacienteModel = JsonConvert.DeserializeObject<PacienteModel>(authContent);
+
+		return pacienteModel;
+	}
+
+	public async Task<string> RegisterPaciente(PacienteModel paciente)
 	{
 		var data = new FormUrlEncodedContent(new[]
 		{

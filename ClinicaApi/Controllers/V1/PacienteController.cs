@@ -28,7 +28,7 @@ public class PacienteController : ControllerBase
 
     [HttpGet]
     [Route("/getallpacientes/{clinicaId}")]
-    public async Task<ActionResult<List<PacienteResponse>>> GetAlLPacientes(Guid clinicaId)
+    public async Task<ActionResult<List<PacienteResponse>>> GetAllPacientes(Guid clinicaId)
     {
         var pacientes = await _pacienteService.GetAllPacientes(clinicaId);
         var responsePacientes = pacientes.Select(paciente => _mapper.Map<PacienteResponse>(paciente));
@@ -36,7 +36,17 @@ public class PacienteController : ControllerBase
         return Ok(responsePacientes);
     }
 
-    [Route("/registerpaciente")]
+	[Route("/getpacientebyid/{id}")]
+	[HttpGet]
+	public async Task<ActionResult<PacienteResponse>> GetPacienteById(Guid id)
+	{
+		var paciente = await _pacienteService.GetPacienteById(id);
+		var responsePaciente = _mapper.Map<PacienteResponse>(paciente);
+
+		return Ok(responsePaciente);
+	}
+
+	[Route("/registerpaciente")]
 	[HttpPost]
 	public async Task<ActionResult<List<PacienteResponse>>> RegisterPaciente([FromForm] PacienteRequest paciente)
 	{

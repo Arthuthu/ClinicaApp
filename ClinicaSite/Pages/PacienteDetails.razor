@@ -1,0 +1,143 @@
+﻿@page "/pacientedetails/{pacienteid}"
+@inject NavigationManager navManager;
+@inject IUserDataService userDataService;
+@inject IPacienteService pacienteService;
+
+<div class="details-parent-div">
+	<div class="details-div"> 
+		<div class="details-label">
+			Nome
+		</div>
+		<div>
+			@Paciente.Nome @Paciente.Sobrenome
+		</div>
+	</div>
+	<div class="details-div">
+		<div class="details-label">
+			CPF
+		</div>
+		<div>
+			@Paciente.CPF
+		</div>
+	</div>
+
+	<div class="details-endereco-label">
+		Endereço
+	</div>
+	<div class="details-endereco-first-main-div">
+		<div class="text-center">
+			<div class="details-label">
+				CEP
+			</div>
+			<div>
+				@Paciente.CEP
+			</div>
+		</div>
+
+		<div class="text-center">
+			<div class="details-label">
+				Estado
+			</div>
+			<div>
+				@Paciente.Estado
+			</div>
+		</div>
+
+		<div class="text-center">
+			<div class="details-label">
+				Cidade
+			</div>
+			<div>
+				@Paciente.Cidade
+			</div>
+		</div>
+	</div>
+
+	<div class="details-endereco-first-main-div">
+		<div class="text-center">
+			<div class="details-label">
+				Bairro
+			</div>
+			<div>
+				@Paciente.Bairro
+			</div>
+		</div>
+
+		<div class="text-center">
+			<div class="details-label">
+				Rua
+			</div>
+			<div>
+				@Paciente.Rua
+			</div>
+		</div>
+
+		<div class="text-center">
+			<div class="details-label">
+				Numero
+			</div>
+			<div>
+				@Paciente.NumeroRua
+			</div>
+		</div>
+	</div>
+
+	<div class="details-contato-label">
+		Contato
+	</div>
+	<div class="details-endereco-first-main-div">
+		<div class="text-center">
+			<div class="details-label">
+				Celular
+			</div>
+			<div>
+				@Paciente.Cel
+			</div>
+		</div>
+
+		<div class="text-center">
+			<div class="details-label">
+				Email
+			</div>
+			<div>
+				@Paciente.Email
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="voltar-button-div">
+	<a href="#" class="first-style-button">
+		Voltar
+	</a>
+</div>
+
+
+@code {
+	[Parameter]
+	public string? PacienteId { get; set; }
+	private Guid LoggedInUserId { get; set; }
+	private PacienteModel? Paciente { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		await GetLoggedInUserId();
+
+		if (LoggedInUserId == Guid.Empty)
+		{
+			navManager.NavigateTo("/login");
+		}
+
+		await GetPacienteById();
+	}
+
+	private async Task GetLoggedInUserId()
+	{
+		LoggedInUserId = await userDataService.GetLoggedInUserId();
+	}
+
+	private async Task GetPacienteById()
+	{
+		Paciente = await pacienteService.GetPacienteById(new Guid(PacienteId));
+	}
+}
