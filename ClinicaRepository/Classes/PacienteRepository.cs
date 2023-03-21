@@ -13,9 +13,10 @@ public class PacienteRepository : IPacienteRepository
 		_db = db;
 	}
 
-	public Task<IEnumerable<PacienteModel>> GetAllPacientes()
+	public Task<IEnumerable<PacienteModel>> GetAllPacientes(Guid clinicaId)
 	{
-		return _db.LoadData<PacienteModel, dynamic>("dbo.spPaciente_GetAll", new { });
+		return _db.LoadData<PacienteModel, dynamic>("dbo.spPaciente_GetAll",
+			new { ClinicaId = clinicaId });
 	}
 
 	public async Task<PacienteModel?> GetPacientesId(Guid id)

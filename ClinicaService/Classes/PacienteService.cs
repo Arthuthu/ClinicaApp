@@ -17,17 +17,17 @@ public class PacienteService : IPacienteService
 		_messageHandler = messageHandler;
 	}
 
-	public Task<IEnumerable<PacienteModel>> GetAllpacientes()
+	public Task<IEnumerable<PacienteModel>> GetAllPacientes(Guid clinicaId)
 	{
-		return _pacienteRepository.GetAllPacientes();
+		return _pacienteRepository.GetAllPacientes(clinicaId);
 	}
 
-	public async Task<PacienteModel?> GetpacienteById(Guid id)
+	public async Task<PacienteModel?> GetPacienteById(Guid id)
 	{
 		return await _pacienteRepository.GetPacientesId(id);
 	}
 
-	public async Task<IList<string>> Addpaciente(PacienteModel paciente)
+	public async Task<IList<string>> AddPaciente(PacienteModel paciente)
 	{
 		IList<string> registrationMessages = new List<string>();
 

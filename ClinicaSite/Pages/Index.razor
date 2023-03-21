@@ -1,19 +1,57 @@
 ﻿@page "/"
 @inject NavigationManager navManager;
 @inject IUserDataService userDataService;
+@inject IPacienteService pacienteService;
 
 <div class="index-buttons-div">
-    <button class="index-button">
-        Buscar clientes
+    <button class="index-button" @onclick="async () => await GetAllPacientes()">
+        Buscar pacientes
     </button>
     <a class="index-anchor" href="/cadastro">
         Cadastrar paciente
     </a>
 </div>
 
+@if (IsPacientesSearched)
+{
+    <div class="pacientes-label">
+        <div class="nome-label">
+            Nome
+        </div>
+        <div class="cpf-cadastrado-div">
+            <div class="cpf-label">
+                CPF
+            </div>
+
+            <div>
+                Cadastrado
+            </div>
+        </div>
+    </div>
+}
+
+<Virtualize Items="@Pacientes" Context="paciente" OverscanCount="50">
+    <a class="pacientes-box" href="/details/@paciente.Id">
+        <div class="paciente-nome-div">
+            @paciente.Nome @paciente.Sobrenome
+        </div>
+        <div class="cpf-createddate-div">
+            <div class="paciente-cpf-div">
+                @paciente.CPF
+            </div>
+            <div>
+                @paciente.CreatedDate.ToString("d")
+            </div>
+        </div>
+    </a>
+</Virtualize>
+
+
 
 @code {
     private Guid LoggedInUserId { get; set; }
+    private IList<PacienteModel>? Pacientes { get; set; }
+    private bool IsPacientesSearched = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -28,5 +66,11 @@
     private async Task GetLoggedInUserId()
     {
         LoggedInUserId = await userDataService.GetLoggedInUserId();
+    }
+
+    private async Task GetAllPacientes()
+    {
+        Pacientes = await pacienteService.GetAllPacientes(LoggedInUserId);
+        IsPacientesSearched = true;
     }
 }

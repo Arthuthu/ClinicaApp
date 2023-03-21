@@ -1,8 +1,8 @@
-/* Navbar */
-
 :root {
     --main-background-color: #1BA300;
 }
+
+/* Navbar */
 
 .navbar {
     background-color: var(--main-background-color);
@@ -293,3 +293,60 @@
 .index-button {
     border-color: transparent;
 }
+
+
+
+.pacientes-label {
+    display: flex;
+    font-weight: bold;
+    font-size: 25px;
+    background-color: var(--main-background-color);
+    color: #FFF;
+    margin: 20px 0 0 0;
+    padding: 25px 0;
+}
+
+.nome-label {
+    width: 60%;
+    margin-left: 10px;
+}
+
+.cpf-cadastrado-div {
+    display: flex;
+}
+
+.cpf-label {
+    margin-right: 255%;
+    margin-left: 25px
+}
+
+.pacientes-box {
+    display: flex;
+    font-size: 20px;
+    padding: 10px 0;
+    border: solid #808080;
+    border-top: transparent;
+    text-decoration: none;
+    color: #000;
+}
+
+.pacientes-box:hover {
+    color: #000;
+    background-color: #C2C2C2;
+    transition: 500ms;
+}
+
+.paciente-nome-div {
+    width: 60%;
+    margin-left: 10px;
+}
+
+.cpf-createddate-div {
+    display: flex;
+}
+
+.paciente-cpf-div {
+    margin-right: 220%;
+}
+
+

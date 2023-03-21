@@ -1,5 +1,6 @@
 ﻿using ClinicaSite.Models;
 using ClinicaSite.Services.PacienteService.Interfaces;
+using Newtonsoft.Json;
 
 namespace ClinicaSite.Services.PacienteService.Classes;
 
@@ -18,7 +19,24 @@ public class PacienteService : IPacienteService
 		_logger = logger;
 	}
 
-	public async Task<string> RegisterPaciente(PacienteModel paciente)
+    public async Task<IList<PacienteModel>?> GetAllPacientes(Guid clinicaId)
+    {
+        string getAllPacientesEndpoint = _config["apiLocation"] + _config["getAllPacientesEndpoint"] + $"/{clinicaId}";
+        var authResult = await _client.GetAsync(getAllPacientesEndpoint);
+        var authContent = await authResult.Content.ReadAsStringAsync();
+
+        if (authResult.IsSuccessStatusCode is false)
+        {
+            _logger.LogInformation($"Ocorreu um erro durante o carregamento dos pacientes: {authContent}");
+            return null;
+        }
+
+        var pacienteModel = JsonConvert.DeserializeObject<IList<PacienteModel>>(authContent);
+
+        return pacienteModel;
+    }
+
+    public async Task<string> RegisterPaciente(PacienteModel paciente)
 	{
 		var data = new FormUrlEncodedContent(new[]
 		{
