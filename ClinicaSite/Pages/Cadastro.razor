@@ -10,84 +10,93 @@
 	</div>
 }
 
-
 <EditForm Model="model" OnValidSubmit="ExecuteCadastro">
 	<div>
-		<div>
+		<div class="cadastrar-cliente-label">
 			<p>Cadastrar cliente</p>
 		</div>
 
-		<div>
-			<p>
-				Dados cadastrais
-			</p>
-		</div>
-
-		<div>
-			<label for="nome" class="visually-hidden">Nome</label>
-			<div>
-				<InputText id="nome" class="form-input-text" @bind-Value="model.Nome" placeholder="Nome" />
+		<div class="cadastrar-form-div">
+			<div class="dados-cadastrais-label">
+				<p>
+					Dados cadastrais
+				</p>
 			</div>
 
 			<div>
-				<label for="sobrenome" class="visually-hidden">Sobrenome</label>
-				<InputText id="sobrenome" class="form-input-text" @bind-Value="model.Sobrenome" placeholder="Sobrenome" />
+				<label for="nome" class="visually-hidden">Nome</label>
+				<div class="nome-sobrenome-input-main-div">
+					<div class="nome-sobrenome-input-div">
+						<InputText id="nome" class="nome-sobrenome-input" @bind-Value="model.Nome" placeholder="Nome" />
+					</div>
+
+					<div class="nome-sobrenome-input-div">
+						<label for="sobrenome" class="visually-hidden">Sobrenome</label>
+						<InputText id="sobrenome" class="nome-sobrenome-input" @bind-Value="model.Sobrenome" placeholder="Sobrenome" />
+					</div>
+				</div>
+
+				<div class="cpf-cel-email-main-div">
+					<div class="cpf-cel-email-div">
+						<label for="cpf" class="visually-hidden">CPF</label>
+						<InputText id="cpf" class="cadastro-input" @bind-Value="model.CPF" placeholder="CPF" />
+					</div>
+
+					<div class="cpf-cel-email-div">
+						<label for="cel" class="visually-hidden">Celular</label>
+						<InputText id="cel" class="cadastro-input" @bind-Value="model.Cel" placeholder="Celular" />
+					</div>
+
+					<div class="cpf-cel-email-div">
+						<label for="email" class="visually-hidden">Email</label>
+						<InputText id="email" class="cadastro-input" @bind-Value="model.Email" placeholder="Email" />
+					</div>
+				</div>
+			</div>
+
+			<div class="endereco-label">
+				<p>Endereço</p>
+			</div>
+			<div>
+				<div class="cep-estado-cidade-div">
+					<div class="endereco-input">
+						<label for="cep" class="visually-hidden">CEP</label>
+						<InputText id="cep" class="cadastro-input" @bind-Value="model.CEP" placeholder="CEP" />
+					</div>
+
+					<div class="endereco-input">
+						<label for="estado" class="visually-hidden">Estado</label>
+						<InputText id="estado" class="cadastro-input" @bind-Value="model.Estado" placeholder="Estado" />
+					</div>
+
+					<div class="endereco-input">
+						<label for="cidade" class="visually-hidden">Cidade</label>
+						<InputText id="cidade" class="cadastro-input" @bind-Value="model.Cidade" placeholder="Cidade" />
+					</div>
+				</div>
+
+				<div class="bairro-rua-numero">
+					<div class="endereco-input">
+						<label for="bairro" class="visually-hidden">Bairro</label>
+						<InputText id="bairro" class="cadastro-input" @bind-Value="model.Bairro" placeholder="Bairro" />
+					</div>
+
+					<div class="endereco-input">
+						<label for="rua" class="visually-hidden">Rua</label>
+						<InputText id="rua" class="cadastro-input" @bind-Value="model.Rua" placeholder="Rua" />
+					</div>
+
+					<div class="endereco-input">
+						<label for="numerorua" class="visually-hidden">NumeroRua</label>
+						<InputText id="numerorua" class="cadastro-input" @bind-Value="model.NumeroRua" placeholder="Numero Rua" />
+					</div>
+				</div>
 			</div>
 
 			<div>
-				<label for="cpf" class="visually-hidden">CPF</label>
-				<InputText id="cpf" class="form-input-text" @bind-Value="model.CPF" placeholder="CPF" />
+				<button type="submit" class="cadastrar-paciente-button">Cadastrar</button>
 			</div>
-
-			<div>
-				<label for="cel" class="visually-hidden">Celular</label>
-				<InputText id="cel" class="form-input-text" @bind-Value="model.Cel" placeholder="Celular" />
-			</div>
-
-			<div>
-				<label for="email" class="visually-hidden">Email</label>
-				<InputText id="email" class="form-input-text" @bind-Value="model.Email" placeholder="Email" />
-			</div>
-		</div>
-
-		<div>
-			<p>Endereço</p>
-		</div>
-		<div>
-			<div>
-				<label for="cep" class="visually-hidden">CEP</label>
-				<InputText id="cep" class="form-input-text" @bind-Value="model.CEP" placeholder="CEP" />
-			</div>
-
-			<div>
-				<label for="estado" class="visually-hidden">Estado</label>
-				<InputText id="estado" class="form-input-text" @bind-Value="model.Estado" placeholder="Estado" />
-			</div>
-
-			<div>
-				<label for="cidade" class="visually-hidden">Cidade</label>
-				<InputText id="cidade" class="form-input-text" @bind-Value="model.Cidade" placeholder="Cidade" />
-			</div>
-
-			<div>
-				<label for="bairro" class="visually-hidden">Bairro</label>
-				<InputText id="bairro" class="form-input-text" @bind-Value="model.Bairro" placeholder="Bairro" />
-			</div>
-
-			<div>
-				<label for="rua" class="visually-hidden">Rua</label>
-				<InputText id="rua" class="form-input-text" @bind-Value="model.Rua" placeholder="Rua" />
-			</div>
-
-			<div>
-				<label for="numerorua" class="visually-hidden">NumeroRua</label>
-				<InputText id="numerorua" class="form-input-text" @bind-Value="model.NumeroRua" placeholder="Numero Rua" />
-			</div>
-		</div>
-
-		<div>
-			<button type="submit" class="">Cadastrar</button>
-		</div>
+		</div>		
 	</div>
 </EditForm>
 

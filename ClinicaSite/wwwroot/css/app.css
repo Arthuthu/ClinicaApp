@@ -164,3 +164,100 @@
     color: #fff;
     background-color: #1BA300;
 }
+
+/* Cadastro */
+
+.cadastrar-form-div {
+    border: solid #808080;
+    border-radius: 25px;
+    text-align: center;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.cadastrar-cliente-label {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.dados-cadastrais-label,
+.endereco-label {
+    background-color: var(--main-background-color);
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: #FFF;
+    padding: 20px 0;
+    border-radius: 20px 20px 0 0;
+}
+
+.endereco-label {
+    border-radius: 0;
+    margin: 30px 0;
+}
+
+.endereco-label > p {
+    margin: 0;
+}
+
+.dados-cadastrais-label > p {
+    margin: 0;
+}
+
+.cadastro-input,
+.nome-sobrenome-input {
+    width: 98%;
+    margin: 10px 0;
+    font-size: 20px;
+    padding: 4px;
+}
+
+.nome-sobrenome-input {
+    width: 80%;
+}
+
+.nome-sobrenome-input-div {
+    width: 80%;
+}
+
+.nome-sobrenome-input-main-div {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.cpf-cel-email-main-div {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.cpf-cel-email-div {
+    width: 30%;
+}
+
+.cep-estado-cidade-div,
+.bairro-rua-numero {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.endereco-input {
+    width: 30%;
+}
+
+.cadastrar-paciente-button {
+    background-color: var(--main-background-color);
+    color: #FFF;
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 20px;
+    padding: 20px 25px;
+    margin: 20px 0;
+    border-color: #FFF;
+}
+
+.cadastrar-paciente-button:hover {
+    transition: 500ms;
+    background-color: #21CB00;
+}
