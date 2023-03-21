@@ -2,9 +2,15 @@
 @inject NavigationManager navManager;
 @inject IUserDataService userDataService;
 
-<a href="/cadastro">
-    Cadastrar paciente
-</a>
+<div class="index-buttons-div">
+    <button class="index-button">
+        Buscar clientes
+    </button>
+    <a class="index-anchor" href="/cadastro">
+        Cadastrar paciente
+    </a>
+</div>
+
 
 @code {
     private Guid LoggedInUserId { get; set; }

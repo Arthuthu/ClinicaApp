@@ -261,3 +261,35 @@
     transition: 500ms;
     background-color: #21CB00;
 }
+
+/* Index */
+
+.index-buttons-div {
+    text-align: center;
+    margin: 20px 0 0 0;
+}
+
+.index-button,
+.index-anchor{
+    background-color: var(--main-background-color);
+    color: white;
+    padding: 20px 30px;
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.index-button:hover,
+.index-anchor:hover{
+    color: white;
+    transition: 500ms;
+    background-color: #22CF00;
+}
+
+.index-anchor {
+    padding: 24px 25px;
+} 
+
+.index-button {
+    border-color: transparent;
+}
