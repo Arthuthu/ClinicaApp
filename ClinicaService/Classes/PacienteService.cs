@@ -62,7 +62,7 @@ public class PacienteService : IPacienteService
 		return registrationMessages;
 	}
 
-	public Task Updatepaciente(PacienteModel paciente)
+	public Task UpdatePaciente(PacienteModel paciente)
 	{
 		paciente.UpdatedDate = DateTime.UtcNow.AddHours(-3);
 		return _pacienteRepository.UpdatePaciente(paciente);

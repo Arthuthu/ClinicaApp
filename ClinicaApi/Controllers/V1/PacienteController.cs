@@ -56,4 +56,14 @@ public class PacienteController : ControllerBase
 
 		return Ok(cleanResponses);
 	}
+
+	[Route("/updatepaciente")]
+	[HttpPut]
+	public async Task<ActionResult<List<PacienteResponse>>> UpdatePaciente([FromForm] PacienteRequest paciente)
+	{
+		var requestPaciente = _mapper.Map<PacienteModel>(paciente);
+		await _pacienteService.UpdatePaciente(requestPaciente);
+
+		return Ok(requestPaciente);
+	}
 }

@@ -84,10 +84,8 @@ public class PacienteRepository : IPacienteRepository
             paciente.NumeroRua,
             paciente.Email,
             paciente.Cel,
-            paciente.UpdatedDate,
-            paciente.ClinicaId
+            paciente.UpdatedDate
         });
-
 	}
 
 	public Task DeletePaciente(Guid id)

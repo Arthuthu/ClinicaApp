@@ -83,4 +83,36 @@ public class PacienteService : IPacienteService
 
 		return await authResult.Content.ReadAsStringAsync();
 	}
+
+	public async Task<string> UpdatePaciente(PacienteModel paciente)
+	{
+		var data = new FormUrlEncodedContent(new[]
+		{
+			new KeyValuePair<string, string>("id", paciente.Id.ToString()),
+			new KeyValuePair<string, string>("nome", paciente.Nome),
+			new KeyValuePair<string, string>("sobrenome", paciente.Sobrenome),
+			new KeyValuePair<string, string>("cpf", paciente.CPF),
+			new KeyValuePair<string, string>("cep", paciente.CEP),
+			new KeyValuePair<string, string>("estado", paciente.Estado),
+			new KeyValuePair<string, string>("cidade", paciente.Cidade),
+			new KeyValuePair<string, string>("bairro", paciente.Bairro),
+			new KeyValuePair<string, string>("rua", paciente.Rua),
+			new KeyValuePair<string, string>("numerorua", paciente.NumeroRua),
+			new KeyValuePair<string, string>("cel", paciente.Cel),
+			new KeyValuePair<string, string>("email", paciente.Email),
+			new KeyValuePair<string, string>("clinicaid", paciente.ClinicaId.ToString()),
+		});
+
+		string updatePacienteEndpoint = _config["apiLocation"] + _config["updatePacienteEndpoint"];
+		var authResult = await _client.PutAsync(updatePacienteEndpoint, data);
+		var authContent = await authResult.Content.ReadAsStringAsync();
+
+		if (authResult.IsSuccessStatusCode is false)
+		{
+			_logger.LogInformation($"Ocorreu um erro durante a atualização do cadastro: {authContent}");
+			return null;
+		}
+
+		return await authResult.Content.ReadAsStringAsync();
+	}
 }

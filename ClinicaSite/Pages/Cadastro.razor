@@ -5,7 +5,7 @@
 
 @if (ShowErrorMessages)
 {
-	<div>
+	<div class="cadastro-error-messages-div">
 		<p>@ErrorMessages</p>
 	</div>
 }
@@ -100,6 +100,14 @@
 	</div>
 </EditForm>
 
+<div class="voltar-button-cadastro">
+	<div class="voltar-button-div">
+		<a href="#" class="first-style-button">
+			Voltar
+		</a>
+	</div>
+</div>
+
 @code {
 	private PacienteModel model = new();
 	private Guid LoggedInUserId { get; set; }
@@ -126,11 +134,14 @@
 		model.ClinicaId = LoggedInUserId;
 		ErrorMessages = await pacienteService.RegisterPaciente(model);
 
-		if (ErrorMessages != "Paciente criado com sucesso")
+		if (ErrorMessages == "Paciente criado com sucesso")
 		{
 			ShowErrorMessages = true;
+			await Task.Delay(1000);
+
+			navManager.NavigateTo("/");
 		}
 
-		await OnInitializedAsync();
+		ShowErrorMessages = true;
 	}
 }

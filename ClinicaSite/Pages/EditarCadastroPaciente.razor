@@ -1,0 +1,150 @@
+﻿@page "/editarcadastropaciente/{pacienteid}"
+@inject NavigationManager navManager;
+@inject IUserDataService userDataService;
+@inject IPacienteService pacienteService;
+
+<EditForm Model="Paciente" OnValidSubmit="UpdatePaciente">
+	<div>
+		<div class="cadastrar-cliente-label">
+			<p>Atualizar cadastro</p>
+		</div>
+
+		<div class="cadastrar-form-div">
+			<div class="dados-cadastrais-label">
+				<p>
+					Dados cadastrais
+				</p>
+			</div>
+
+			<div>
+				<div class="nome-sobrenome-input-main-div">
+					<div class="nome-sobrenome-input-div">
+						<label for="nome" class="form-label">Nome</label>
+						<InputText id="nome" class="nome-sobrenome-input" @bind-Value="Paciente.Nome" placeholder="Nome" />
+					</div>
+
+					<div class="nome-sobrenome-input-div">
+						<label for="sobrenome" class="form-label">Sobrenome</label>
+						<InputText id="sobrenome" class="nome-sobrenome-input" @bind-Value="Paciente.Sobrenome" placeholder="Sobrenome" />
+					</div>
+				</div>
+
+				<div class="cpf-cel-email-main-div">
+					<div class="cpf-cel-email-div">
+						<label for="cpf" class="form-label">CPF</label>
+						<InputText id="cpf" class="cadastro-input" @bind-Value="Paciente.CPF" placeholder="CPF" />
+					</div>
+
+					<div class="cpf-cel-email-div">
+						<label for="cel" class="form-label">Celular</label>
+						<InputText id="cel" class="cadastro-input" @bind-Value="Paciente.Cel" placeholder="Celular" />
+					</div>
+
+					<div class="cpf-cel-email-div">
+						<label for="email" class="form-label">Email</label>
+						<InputText id="email" class="cadastro-input" @bind-Value="Paciente.Email" placeholder="Email" />
+					</div>
+				</div>
+			</div>
+
+			<div class="endereco-label">
+				<p>Endereço</p>
+			</div>
+			<div>
+				<div class="cep-estado-cidade-div">
+					<div class="endereco-input">
+						<label for="cep" class="form-label">CEP</label>
+						<InputText id="cep" class="cadastro-input" @bind-Value="Paciente.CEP" placeholder="CEP" />
+					</div>
+
+					<div class="endereco-input">
+						<label for="estado" class="form-label">Estado</label>
+						<InputText id="estado" class="cadastro-input" @bind-Value="Paciente.Estado" placeholder="Estado" />
+					</div>
+
+					<div class="endereco-input">
+						<label for="cidade" class="form-label">Cidade</label>
+						<InputText id="cidade" class="cadastro-input" @bind-Value="Paciente.Cidade" placeholder="Cidade" />
+					</div>
+				</div>
+
+				<div class="bairro-rua-numero">
+					<div class="endereco-input">
+						<label for="bairro" class="form-label">Bairro</label>
+						<InputText id="bairro" class="cadastro-input" @bind-Value="Paciente.Bairro" placeholder="Bairro" />
+					</div>
+
+					<div class="endereco-input">
+						<label for="rua" class="form-label">Rua</label>
+						<InputText id="rua" class="cadastro-input" @bind-Value="Paciente.Rua" placeholder="Rua" />
+					</div>
+
+					<div class="endereco-input">
+						<label for="numerorua" class="form-label">NumeroRua</label>
+						<InputText id="numerorua" class="cadastro-input" @bind-Value="Paciente.NumeroRua" placeholder="Numero Rua" />
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<button type="submit" class="cadastrar-paciente-button">Atualizar</button>
+			</div>
+		</div>
+	</div>
+</EditForm>
+
+<div class="voltar-button-cadastro">
+	<div class="voltar-button-div">
+		<a href="#" class="first-style-button">
+			Voltar
+		</a>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public string? PacienteId { get; set; }
+	private Guid LoggedInUserId { get; set; }
+	private PacienteModel? Paciente { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		await GetLoggedInUserId();
+
+		if (LoggedInUserId == Guid.Empty)
+		{
+			navManager.NavigateTo("/login");
+		}
+
+		await GetPacienteModel();
+
+		if (Paciente is null)
+		{
+			navManager.NavigateTo("/");	
+		}
+
+		if (Paciente.ClinicaId != LoggedInUserId)
+		{
+			navManager.NavigateTo("/");
+		}
+	}
+
+	private async Task GetLoggedInUserId()
+	{
+		LoggedInUserId = await userDataService.GetLoggedInUserId();
+	}
+
+	private async Task GetPacienteModel()
+	{
+		Paciente = await pacienteService.GetPacienteById(new Guid(PacienteId!));
+	}
+
+	private async Task UpdatePaciente()
+	{
+		if (Paciente is not null)
+		{
+			await pacienteService.UpdatePaciente(Paciente);
+			navManager.NavigateTo($"/pacientedetails/{Paciente.Id}");
+		}
+	}
+}

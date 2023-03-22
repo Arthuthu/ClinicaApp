@@ -16,4 +16,6 @@ public class PacienteResponse
 	public string Cel { get; set; }
 	public DateTime CreatedDate { get; set; }
 	public DateTime UpdatedDate { get; set; }
+
+	public Guid ClinicaId { get; set; }
 }

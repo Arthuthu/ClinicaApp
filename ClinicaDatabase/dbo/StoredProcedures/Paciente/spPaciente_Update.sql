@@ -6,8 +6,8 @@
 @CEP nvarchar(12),
 @Estado nvarchar(20),
 @Cidade nvarchar(50),
-@Rua nvarchar(50),
 @Bairro nvarchar(30),
+@Rua nvarchar(50),
 @NumeroRua nvarchar(5),
 @Email nvarchar(50),
 @Cel nvarchar(15),
@@ -15,6 +15,6 @@
 AS
 BEGIN
 UPDATE dbo.[Pacientes]
-SET Nome = @Nome, Sobrenome = @Sobrenome, CPF = @CPF, CEP = @CEP, Estado = @Estado, Cidade = @Cidade, Rua = @Rua, Bairro = @Bairro, NumeroRua = @NumeroRua, Email = @Email, Cel = @Cel, UpdatedDate = @UpdatedDate
+SET Nome = @Nome, Sobrenome = @Sobrenome, CPF = @CPF, CEP = @CEP, Estado = @Estado, Cidade = @Cidade, Bairro = @Bairro, Rua = @Rua,  NumeroRua = @NumeroRua, Email = @Email, Cel = @Cel, UpdatedDate = @UpdatedDate
 WHERE Id = @Id
 END
