@@ -116,17 +116,12 @@
 
 	protected override async Task OnInitializedAsync()
 	{
-		await GetLoggedInUserId();
+		LoggedInUserId = await userDataService.GetLoggedInUserId();
 
 		if (LoggedInUserId == Guid.Empty)
 		{
 			navManager.NavigateTo("/login");
 		}
-	}
-
-	private async Task GetLoggedInUserId()
-	{
-		LoggedInUserId = await userDataService.GetLoggedInUserId();
 	}
 
 	private async Task ExecuteCadastro()
