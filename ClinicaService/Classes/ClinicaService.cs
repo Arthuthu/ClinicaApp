@@ -183,8 +183,9 @@ public class ClinicaClassService : IClinicaClassService
 		{
 			new Claim(ClaimTypes.Name, clinica.Username),
 			new Claim(ClaimTypes.NameIdentifier, clinica.Id.ToString()),
+			new Claim(ClaimTypes.Expiration, DateTime.UtcNow.AddSeconds(10).ToString()),
 			new Claim(ClaimTypes.Role, "User")
-		};
+        };
 
 
 		var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(

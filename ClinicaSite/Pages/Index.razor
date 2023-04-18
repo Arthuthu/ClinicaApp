@@ -7,11 +7,15 @@
     <button class="index-button" @onclick="async () => await GetAllPacientes()">
         Buscar pacientes
     </button>
-    <a class="index-anchor" href="/cadastro">
+    <button class="index-anchor" @onclick=ToggleShowCadastrarPaciente>
         Cadastrar paciente
-    </a>
+    </button>
 </div>
 
+@if (showCadastrarPaciente)
+{
+    <Cadastro/>
+}
 
 <div class="buscar-buttons-parent-div">
     <div class="buscar-buttons-second-div">
@@ -80,6 +84,7 @@
     private ClinicaModel? Clinica { get; set; }
     private string PacienteName = "";
     private string PacienteCPF = "";
+    private bool showCadastrarPaciente = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -117,6 +122,13 @@
     {
         var pacientes = await pacienteService.GetAllPacientes(LoggedInUserId);
 
-        Pacientes = pacientes?.Where(x => x.Nome!.Contains(name)).ToList();
+        Pacientes = pacientes?.Where(x => x.Nome!.ToLower().Contains(name.ToLower())).ToList();
+    }
+
+    //Toggles
+
+    private void ToggleShowCadastrarPaciente()
+    {
+        showCadastrarPaciente = !showCadastrarPaciente;
     }
 }

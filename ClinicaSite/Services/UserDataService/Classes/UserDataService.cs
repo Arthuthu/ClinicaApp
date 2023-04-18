@@ -1,6 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using ClinicaSite.Models;
 using ClinicaSite.Services.UserDataService.Interfaces;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Newtonsoft.Json;
 using System.Security.Claims;
@@ -10,6 +11,7 @@ public class UserDataService : IUserDataService
 {
 	private readonly AuthenticationStateProvider _authenticationStateProvider;
     private readonly ILocalStorageService _localStorage;
+    private readonly NavigationManager _navigationManager;
     private readonly IConfiguration _config;
 	private readonly HttpClient _client;
 	private readonly ILogger<UserDataService> _logger;
@@ -17,28 +19,42 @@ public class UserDataService : IUserDataService
     public UserDataService(AuthenticationStateProvider authenticationStateProvider,
 		IConfiguration config,
 		ILocalStorageService localStorage,
+	    NavigationManager navigationManager,
 		HttpClient client,
-		ILogger<UserDataService> logger)
+        ILogger<UserDataService> logger)
 	{
 		_authenticationStateProvider = authenticationStateProvider;
         _config = config;
         _localStorage = localStorage;
-		_client = client;
+        _navigationManager = navigationManager;
+        _client = client;
         _logger = logger;
     }
-	public async Task<Guid> GetLoggedInUserId()
-	{
-		var authenticationState = await _authenticationStateProvider.GetAuthenticationStateAsync();
-		var user = authenticationState.User;
-		var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    public async Task<Guid> GetLoggedInUserId()
+    {
+        var authenticationState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authenticationState.User;
+        var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-		if (userId is null)
-		{
-			return Guid.Empty;
-		}
+        if (userId is null)
+        {
+            return Guid.Empty;
+        }
 
-		return new Guid(userId);
-	}
+        var expirationClaim = user.FindFirst(ClaimTypes.Expiration);
+
+        if (expirationClaim is not null)
+        {
+            var expirationDate = DateTime.Parse(expirationClaim.Value);
+            if (expirationDate < DateTime.UtcNow)
+            {
+                _navigationManager.NavigateTo("/expiration");
+                return Guid.Empty;
+            }
+        }
+
+        return new Guid(userId);
+    }
 
 	public async Task<ClinicaModel> GetClinicaModel(Guid id)
 	{
