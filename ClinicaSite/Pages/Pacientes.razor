@@ -1,0 +1,89 @@
+﻿@page "/pacientes"
+@inject IPacienteService pacienteService;
+@inject IUserDataService userDataService;
+
+<div class="buscar-buttons-parent-div">
+    <div class="buscar-buttons-second-div">
+        <div class="index-search-input-div">
+            <InputText class="index-search-input" @bind-Value="@PacienteName" placeholder="Procurar por nome" />
+        </div>
+
+        <div>
+            <button @onclick="async () => await GetPacienteByName(PacienteName)"
+                    class="first-style-button" id="index-buscar-button">
+                Buscar
+            </button>
+        </div>
+    </div>
+
+    <div class="buscar-buttons-second-div">
+        <div class="index-search-input-div">
+            <InputText class="index-search-input" @bind-Value="@PacienteCPF" placeholder="Procurar por CPF" />
+        </div>
+
+        <div>
+            <button @onclick="async () => await GetPacienteByCPF(PacienteCPF)"
+                    class="first-style-button" id="index-buscar-button">
+                Buscar
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="pacientes-label">
+    <div class="nome-label">
+        Nome
+    </div>
+    <div class="cpf-cadastrado-div">
+        <div class="cpf-label">
+            CPF
+        </div>
+
+        <div>
+            Cadastrado
+        </div>
+    </div>
+</div>
+
+<Virtualize Items="@PacientesList" Context="paciente" OverscanCount="50">
+    <a class="pacientes-box" href="/pacientedetails/@paciente.Id">
+        <div class="paciente-nome-div">
+            @paciente.Nome @paciente.Sobrenome
+        </div>
+        <div class="cpf-createddate-div">
+            <div class="paciente-cpf-div">
+                @paciente.CPF
+            </div>
+            <div>
+                @paciente.CreatedDate.ToString("d")
+            </div>
+        </div>
+    </a>
+</Virtualize>
+
+@code {
+    private Guid LoggedInUserId { get; set; }
+    private IList<PacienteModel>? PacientesList { get; set; }
+    private string PacienteName = "";
+    private string PacienteCPF = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        LoggedInUserId = await userDataService.GetLoggedInUserId();
+        PacientesList = await pacienteService.GetAllPacientes(LoggedInUserId);
+    }
+
+    private async Task GetPacienteByCPF(string CPF)
+    {
+        var pacientes = await pacienteService.GetAllPacientes(LoggedInUserId);
+
+        PacientesList = pacientes?.Where(x => x.CPF!.Contains(CPF)).ToList();
+    }
+
+    private async Task GetPacienteByName(string name)
+    {
+        var pacientes = await pacienteService.GetAllPacientes(LoggedInUserId);
+
+        PacientesList = pacientes?.Where(x => x.Nome!.ToLower().Contains(name.ToLower())).ToList();
+    }
+}
