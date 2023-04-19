@@ -442,7 +442,7 @@
     width: 100%;
 }
 
-.editar-voltar-button-div {
+.paciente-details-options-div {
     display: flex;
     justify-content: space-evenly;
     margin: 30px 0;

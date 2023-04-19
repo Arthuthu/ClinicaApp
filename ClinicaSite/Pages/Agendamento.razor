@@ -1,9 +1,52 @@
-﻿@page "/agendamento"
+﻿@page "/agendamento/{pacienteid}"
+@inject IUserDataService userService
+@inject IPacienteService pacienteService
+@inject NavigationManager navManager
+
+<div>
+    Agende uma consulta para @Paciente!.Nome @Paciente.Sobrenome
+</div>
 
 <div>
     <input type="date" placeholder="Escolha um data" />
 </div>
 
 @code {
+    [Parameter]
+    public string? PacienteId { get; set; }
+    private Guid LoggedInUserId { get; set; }
+    private PacienteModel? Paciente { get; set; }
 
+
+    protected override async Task OnInitializedAsync()
+    {
+        await PageVerification();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await PageVerification();
+    }
+
+    private async Task PageVerification()
+    {
+        if (PacienteId is null)
+        {
+            navManager.NavigateTo("/index");
+        }
+
+        LoggedInUserId = await userService.GetLoggedInUserId();
+
+        if (LoggedInUserId == Guid.Empty)
+        {
+            navManager.NavigateTo("/login");
+        }
+
+        Paciente = await pacienteService.GetPacienteById(new Guid(PacienteId!));
+
+        if (Paciente is null)
+        {
+            navManager.NavigateTo("/index");
+        }
+    }
 }
