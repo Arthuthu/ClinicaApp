@@ -17,9 +17,9 @@ public class ConsultaService : IConsultaService
         _messageHandler = messageHandler;
     }
 
-    public Task<IEnumerable<ConsultaModel>> GetAllConsultas()
+    public Task<IEnumerable<ConsultaModel>> GetAllConsultas(Guid clinicaId)
     {
-        return _consultaRepository.GetAllConsultas();
+        return _consultaRepository.GetAllConsultas(clinicaId);
     }
 
     public async Task<ConsultaModel?> GetConsultaById(Guid id)

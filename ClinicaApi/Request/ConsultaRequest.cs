@@ -6,4 +6,5 @@ public class ConsultaRequest
     public string? Descricao { get; set; }
 
     public Guid PacienteId { get; set; }
+    public Guid ClinicaId { get; set; }
 }

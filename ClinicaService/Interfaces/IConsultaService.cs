@@ -6,7 +6,7 @@ namespace ClinicaService.Interfaces
     {
         Task<ConsultaModel> CreateConsulta(ConsultaModel consulta);
         Task DeleteConsulta(Guid id);
-        Task<IEnumerable<ConsultaModel>> GetAllConsultas();
+        Task<IEnumerable<ConsultaModel>> GetAllConsultas(Guid clinicaId);
         Task<ConsultaModel?> GetConsultaById(Guid id);
         Task UpdateConsulta(ConsultaModel paciente);
     }

@@ -13,9 +13,10 @@ public class ConsultaRepository : IConsultaRepository
         _db = db;
     }
 
-    public Task<IEnumerable<ConsultaModel>> GetAllConsultas()
+    public Task<IEnumerable<ConsultaModel>> GetAllConsultas(Guid clinicaId)
     {
-        return _db.LoadData<ConsultaModel, dynamic>("dbo.spConsulta_GetAll", new { });
+        return _db.LoadData<ConsultaModel, dynamic>("dbo.spConsulta_GetAll", 
+            new { clinicaId });
     }
 
     public async Task<ConsultaModel?> GetConsultaById(Guid id)
@@ -35,7 +36,8 @@ public class ConsultaRepository : IConsultaRepository
             consulta.Data,
             consulta.Descricao,
             consulta.CreatedDate,
-            consulta.PacienteId
+            consulta.PacienteId,
+            consulta.ClinicaId
         });
     }
 

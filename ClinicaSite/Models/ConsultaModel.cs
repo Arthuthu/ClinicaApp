@@ -10,4 +10,6 @@ public class ConsultaModel
     public DateTime UpdatedDate { get; set; }
 
     public Guid PacienteId { get; set; }
+    public Guid ClinicaId { get; set; }
+
 }

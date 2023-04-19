@@ -6,5 +6,6 @@
     [CreatedDate] DATETIME2 NULL, 
     [UpdatedDate] DATETIME2 NULL, 
     [PacienteId] UNIQUEIDENTIFIER NOT NULL,
+    [ClinicaId] UNIQUEIDENTIFIER NULL, 
     FOREIGN KEY (PacienteId) REFERENCES Pacientes(Id) ON DELETE CASCADE
 )

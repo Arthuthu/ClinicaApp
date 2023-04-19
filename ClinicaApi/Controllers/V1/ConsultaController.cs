@@ -26,10 +26,10 @@ public class ConsultaController : ControllerBase
     }
 
     [HttpGet]
-    [Route("/getallconsultas")]
-    public async Task<ActionResult<List<ConsultaResponse>>> GetAllConsultas()
+    [Route("/getallconsultas/{clinicaid}")]
+    public async Task<ActionResult<List<ConsultaResponse>>> GetAllConsultas(Guid clinicaId)
     {
-        var consultas = await _consultaService.GetAllConsultas();
+        var consultas = await _consultaService.GetAllConsultas(clinicaId);
         var responseConsultas = consultas.Select(paciente => _mapper.Map<ConsultaResponse>(consultas));
 
         return Ok(responseConsultas);
