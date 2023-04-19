@@ -1,14 +1,34 @@
 ﻿@page "/agendamento/{pacienteid}"
 @inject IUserDataService userService
 @inject IPacienteService pacienteService
+@inject IConsultaService consultaService
 @inject NavigationManager navManager
 
 <div class="text-center fw-bold h4 my-4">
     Agende uma consulta para @Paciente!.Nome @Paciente.Sobrenome
 </div>
 
-<div>
-    <input type="date" placeholder="Escolha um data" />
+<EditForm Model="Consulta" OnValidSubmit="CreateConsulta">
+    <div class="text-center">
+        <div>
+            <InputDate TValue="DateTime" id="date" ValueExpression="@(() => Consulta.Data)"
+                       @bind-value="Consulta.Data" placeholder="Escolha uma data" />
+        </div>
+
+        <div>
+            <InputText id="descricao" @bind-Value="Consulta.Descricao" placeholder="Digite uma descrição (Não obrigatório)" />
+        </div>
+
+        <div class="text-center my-4">
+            <button type="submit" class="index-button">
+                Agendar consulta
+            </button>
+        </div>
+    </div>
+</EditForm>
+
+<div class="text-center fw-bold h4 my-4">
+    @responseMessage
 </div>
 
 @code {
@@ -16,7 +36,8 @@
     public string? PacienteId { get; set; }
     private Guid LoggedInUserId { get; set; }
     private PacienteModel? Paciente { get; set; }
-
+    private ConsultaModel Consulta = new();
+    private string? responseMessage = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -48,5 +69,13 @@
         {
             navManager.NavigateTo("/index");
         }
+    }
+
+    private async Task CreateConsulta()
+    {
+        Consulta.ClinicaId = LoggedInUserId;
+        Consulta.PacienteId = Paciente!.Id;
+
+        responseMessage = await consultaService.CreateConsulta(Consulta);
     }
 }

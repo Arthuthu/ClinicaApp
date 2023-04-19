@@ -1,10 +1,9 @@
 ﻿using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components;
-using Newtonsoft.Json;
-using System.Security.Claims;
 using ClinicaSite.Models;
 using ClinicaSite.Services.ConsultaService.Interfaces;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using Newtonsoft.Json;
 
 namespace ConsultaSite.Services.ConsultaService.Classes;
 
