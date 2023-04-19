@@ -62,6 +62,7 @@
     <Folder Include="PublishLocations\" />
     <Folder Include="dbo\StoredProcedures\Clinica" />
     <Folder Include="dbo\StoredProcedures\Paciente" />
+    <Folder Include="dbo\StoredProcedures\Consulta" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Pacientes.sql" />
@@ -78,6 +79,12 @@
     <Build Include="dbo\StoredProcedures\Paciente\spPaciente_Update.sql" />
     <Build Include="dbo\StoredProcedures\Clinica\spClinica_GetByName.sql" />
     <Build Include="dbo\StoredProcedures\Paciente\spPaciente_GetByCPF.sql" />
+    <Build Include="dbo\Tables\Consultas.sql" />
+    <Build Include="dbo\StoredProcedures\Consulta\spConsulta_Add.sql" />
+    <Build Include="dbo\StoredProcedures\Consulta\spConsulta_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\Consulta\spConsulta_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\Consulta\spClinica_GetById.sql" />
+    <Build Include="dbo\StoredProcedures\Consulta\spClinica_Update.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishLocations\ClinicaDatabase.publish.xml" />
