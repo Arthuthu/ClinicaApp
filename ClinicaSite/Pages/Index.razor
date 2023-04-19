@@ -27,7 +27,6 @@
     private ClinicaModel? Clinica { get; set; }
     private bool showPacientesList = false;
     private bool showCadastrarPaciente = false;
-    private bool showAgendarConsulta = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -50,15 +49,12 @@
     private void ToggleShowCadastrarPaciente()
     {
         showCadastrarPaciente = !showCadastrarPaciente;
+        showPacientesList = false;
     }
 
     private void ToggleShowPacientes()
     {
         showPacientesList = !showPacientesList;
-    }
-
-    private void ToggleAgenderConsulta()
-    {
-        showAgendarConsulta = !showAgendarConsulta;
+        showCadastrarPaciente = false;
     }
 }
