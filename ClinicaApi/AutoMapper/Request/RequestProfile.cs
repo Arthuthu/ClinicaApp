@@ -20,7 +20,11 @@ public class RequestProfile : Profile
 			.IgnoreAllPropertiesWithAnInaccessibleSetter()
 			.ReverseMap();
 
-		CreateMap<PacienteModel, PacienteRequest>()
+        CreateMap<ConsultaModel, ConsultaRequest>()
+			.IgnoreAllPropertiesWithAnInaccessibleSetter()
+			.ReverseMap();
+
+        CreateMap<PacienteModel, PacienteRequest>()
 			.IgnoreAllPropertiesWithAnInaccessibleSetter()
 			.ReverseMap();
 	}

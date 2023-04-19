@@ -51,8 +51,8 @@ public class PacienteController : ControllerBase
 	public async Task<ActionResult<List<PacienteResponse>>> RegisterPaciente([FromForm] PacienteRequest paciente)
 	{
 		var requestPaciente = _mapper.Map<PacienteModel>(paciente);
-		var roadmapCreationMessages = await _pacienteService.AddPaciente(requestPaciente);
-		var cleanResponses = await _messageHandler.ConcatRegistrationMessages(roadmapCreationMessages);
+		var pacienteCreationMessages = await _pacienteService.AddPaciente(requestPaciente);
+		var cleanResponses = await _messageHandler.ConcatRegistrationMessages(pacienteCreationMessages);
 
 		return Ok(cleanResponses);
 	}

@@ -9,7 +9,6 @@ using ClinicaService.Validators.Interfaces;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -32,11 +31,13 @@ builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
 //Repositories
 builder.Services.AddSingleton<IClinicaClassRepository, ClinicaClassRepository>();
 builder.Services.AddSingleton<IPacienteRepository, PacienteRepository>();
+builder.Services.AddSingleton<IConsultaRepository, ConsultaRepository>();
 
 
 //Services
 builder.Services.AddSingleton<IClinicaClassService, ClinicaClassService>();
 builder.Services.AddSingleton<IPacienteService, PacienteService>();
+builder.Services.AddSingleton<IConsultaService, ConsultaService>();
 
 
 //Validators / MessageHandler

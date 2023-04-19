@@ -1,7 +1,6 @@
-﻿using ClinicaRepository.Models;
-using AutoMapper;
-using ClinicaApi.Request;
+﻿using AutoMapper;
 using ClinicaApi.Response;
+using ClinicaRepository.Models;
 
 namespace ClinicaApi.AutoMapper.Response;
 
@@ -16,5 +15,9 @@ public class ResponseProfile : Profile
 		CreateMap<PacienteResponse, PacienteModel>()
 			.IgnoreAllPropertiesWithAnInaccessibleSetter()
 			.ReverseMap();
-	}
+
+        CreateMap<ConsultaResponse, ConsultaModel>()
+            .IgnoreAllPropertiesWithAnInaccessibleSetter()
+            .ReverseMap();
+    }
 }
