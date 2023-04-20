@@ -465,3 +465,14 @@
     margin-right: 5px;
 }
 
+/* Agendamento */
+
+.date-input {
+    padding: 5px;
+    font-size: 20px;
+}
+
+.textarea-input {
+    width: 100%;
+    padding-bottom: 20px;
+}

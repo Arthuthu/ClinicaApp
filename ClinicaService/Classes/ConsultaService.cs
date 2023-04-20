@@ -29,6 +29,12 @@ public class ConsultaService : IConsultaService
 
     public async Task<ConsultaModel> CreateConsulta(ConsultaModel consulta)
     {
+        if (consulta.Data <= DateTime.Today)
+        {
+            //Criar a list of string "Não é possivel criar consulta antes de hoje
+            // Adicionar hora para a consulta
+        }
+
         consulta.Id = Guid.NewGuid();
         consulta.CreatedDate = DateTime.UtcNow.AddHours(-3);
 

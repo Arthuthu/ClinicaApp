@@ -50,9 +50,16 @@ public class ConsultaController : ControllerBase
     public async Task<ActionResult<List<ConsultaResponse>>> RegisterConsulta([FromForm] ConsultaRequest consulta)
     {
         var requestConsulta = _mapper.Map<ConsultaModel>(consulta);
-        var consultaResponse = await _consultaService.CreateConsulta(requestConsulta);
 
-        return Ok(consultaResponse);
+        try
+        {
+            var consultaResponse = await _consultaService.CreateConsulta(requestConsulta);
+            return Ok("Consulta criada com sucesso");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Não foi possivel agendar a consulta {ex.Message}");
+        }
     }
 
     [Route("/updateconsulta")]

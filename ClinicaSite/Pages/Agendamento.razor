@@ -10,13 +10,17 @@
 
 <EditForm Model="Consulta" OnValidSubmit="CreateConsulta">
     <div class="text-center">
-        <div>
+        <div class="fw-bold h4">
+            Data
+        </div>
+        <div class="my-4">
             <InputDate TValue="DateTime" id="date" ValueExpression="@(() => Consulta.Data)"
-                       @bind-value="Consulta.Data" placeholder="Escolha uma data" />
+                       @bind-value="Consulta.Data" placeholder="Escolha uma data" class="date-input"/>
         </div>
 
         <div>
-            <InputText id="descricao" @bind-Value="Consulta.Descricao" placeholder="Digite uma descrição (Não obrigatório)" />
+            <InputTextArea id="descricao" @bind-Value="Consulta.Descricao"
+                           placeholder="Digite uma descrição (Não obrigatório)" class="textarea-input" />
         </div>
 
         <div class="text-center my-4">

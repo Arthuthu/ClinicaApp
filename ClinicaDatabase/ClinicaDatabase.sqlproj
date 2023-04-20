@@ -83,8 +83,8 @@
     <Build Include="dbo\StoredProcedures\Consulta\spConsulta_Add.sql" />
     <Build Include="dbo\StoredProcedures\Consulta\spConsulta_Delete.sql" />
     <Build Include="dbo\StoredProcedures\Consulta\spConsulta_GetAll.sql" />
-    <Build Include="dbo\StoredProcedures\Consulta\spClinica_GetById.sql" />
-    <Build Include="dbo\StoredProcedures\Consulta\spClinica_Update.sql" />
+    <Build Include="dbo\StoredProcedures\Consulta\spConsulta_GetById.sql" />
+    <Build Include="dbo\StoredProcedures\Consulta\spConsulta_Update.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishLocations\ClinicaDatabase.publish.xml" />

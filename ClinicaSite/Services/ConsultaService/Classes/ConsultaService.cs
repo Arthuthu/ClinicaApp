@@ -94,7 +94,7 @@ public class ConsultaService : IConsultaService
             new KeyValuePair<string, string>("data", consulta.Data.ToString()),
             new KeyValuePair<string, string>("descricao", consulta.Descricao),
             new KeyValuePair<string, string>("pacienteid", consulta.PacienteId.ToString()),
-            new KeyValuePair<string, string>("pacienteid", consulta.ClinicaId.ToString())
+            new KeyValuePair<string, string>("clinicaid", consulta.ClinicaId.ToString())
 
         });
 
