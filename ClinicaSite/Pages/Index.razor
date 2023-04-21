@@ -24,8 +24,7 @@
 
 @code {
     private Guid LoggedInUserId { get; set; }
-    private ClinicaModel? Clinica { get; set; }
-    private bool showPacientesList = false;
+    private bool showPacientesList = true;
     private bool showCadastrarPaciente = false;
 
     protected override async Task OnInitializedAsync()
@@ -37,12 +36,6 @@
             navManager.NavigateTo("/login");
         }
     }
-
-    private async Task GetClinicaModel()
-    {
-        Clinica = await userDataService.GetClinicaModel(LoggedInUserId);
-    }
-
 
     //Toggles
 

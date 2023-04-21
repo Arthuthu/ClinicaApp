@@ -45,21 +45,25 @@ public class ConsultaController : ControllerBase
         return Ok(responseConsulta);
     }
 
-    [Route("/createconsulta")]
+	[Route("/getconsultasbypacienteid/{clinicaid}/{pacienteId}")]
+	[HttpGet]
+	public async Task<ActionResult<ConsultaResponse>> GetConsultaByPacienteId(Guid clinicaId, Guid pacienteId)
+	{
+        var consultas = await _consultaService.GetConsultasByPacienteId(clinicaId, pacienteId);
+        var responseConsultas = consultas.Select(paciente => _mapper.Map<ConsultaResponse>(consultas));
+
+        return Ok(responseConsultas);
+    }
+
+	[Route("/createconsulta")]
     [HttpPost]
     public async Task<ActionResult<List<ConsultaResponse>>> RegisterConsulta([FromForm] ConsultaRequest consulta)
     {
         var requestConsulta = _mapper.Map<ConsultaModel>(consulta);
+        var consultaCreationMessages = await _consultaService.CreateConsulta(requestConsulta);
+        var cleanResponses = await _messageHandler.ConcatRegistrationMessages(consultaCreationMessages);
 
-        try
-        {
-            var consultaResponse = await _consultaService.CreateConsulta(requestConsulta);
-            return Ok("Consulta criada com sucesso");
-        }
-        catch (Exception ex)
-        {
-            return BadRequest($"Não foi possivel agendar a consulta {ex.Message}");
-        }
+        return Ok(cleanResponses);
     }
 
     [Route("/updateconsulta")]

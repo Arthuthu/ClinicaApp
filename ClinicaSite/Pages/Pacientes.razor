@@ -2,28 +2,28 @@
 @inject IPacienteService pacienteService;
 @inject IUserDataService userDataService;
 
-<div class="buscar-buttons-parent-div">
-    <div class="buscar-buttons-second-div">
-        <div class="index-search-input-div">
-            <InputText class="index-search-input" @bind-Value="@PacienteName" placeholder="Procurar por nome" />
+<div class="pacientes-search-div">
+    <div class="paciente-search-input-button-div">
+        <div class="pacientes-search-input-div">
+            <InputText class="pacientes-search-input" @bind-Value="@PacienteName" placeholder="Procurar por Nome" />
         </div>
 
         <div>
             <button @onclick="async () => await GetPacienteByName(PacienteName)"
-                    class="first-style-button" id="index-buscar-button">
+                    class="first-style-button" id="pacientes-buscar-button">
                 Buscar
             </button>
         </div>
     </div>
 
-    <div class="buscar-buttons-second-div">
-        <div class="index-search-input-div">
-            <InputText class="index-search-input" @bind-Value="@PacienteCPF" placeholder="Procurar por CPF" />
+    <div class="paciente-search-input-button-div">
+        <div class="pacientes-search-input-div">
+            <InputText class="pacientes-search-input" @bind-Value="@PacienteCPF" placeholder="Procurar por CPF" />
         </div>
 
         <div>
             <button @onclick="async () => await GetPacienteByCPF(PacienteCPF)"
-                    class="first-style-button" id="index-buscar-button">
+                    class="first-style-button" id="pacientes-buscar-button">
                 Buscar
             </button>
         </div>

@@ -85,6 +85,7 @@
     <Build Include="dbo\StoredProcedures\Consulta\spConsulta_GetAll.sql" />
     <Build Include="dbo\StoredProcedures\Consulta\spConsulta_GetById.sql" />
     <Build Include="dbo\StoredProcedures\Consulta\spConsulta_Update.sql" />
+    <Build Include="dbo\StoredProcedures\Consulta\spConsulta_GetConsultasByPacienteId.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishLocations\ClinicaDatabase.publish.xml" />

@@ -65,7 +65,24 @@ public class ConsultaService : IConsultaService
         return clinicaModel;
     }
 
-    public async Task<string> UpdateConsulta(ConsultaModel clinica)
+	public async Task<List<ConsultaModel>> GetConsultasByPacienteId(Guid clinicaId, Guid pacienteId)
+	{
+		string getConsultaByPacienteIdEndpoint = _config["apiLocation"] + _config["getConsultaByPacienteIdEndpoint"] + $"/{clinicaId}" + $"/{pacienteId}";
+		var authResult = await _client.GetAsync(getConsultaByPacienteIdEndpoint);
+		var authContent = await authResult.Content.ReadAsStringAsync();
+
+		if (authResult.IsSuccessStatusCode is false)
+		{
+			_logger.LogInformation($"Ocorreu um erro durante o carregamento da consulta: {authContent}");
+			return null;
+		}
+
+		var clinicaModel = JsonConvert.DeserializeObject<List<ConsultaModel>>(authContent);
+
+		return clinicaModel;
+	}
+
+	public async Task<string> UpdateConsulta(ConsultaModel clinica)
     {
         var data = new FormUrlEncodedContent(new[]
         {

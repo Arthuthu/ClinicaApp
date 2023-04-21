@@ -2,6 +2,17 @@
 @inject NavigationManager navManager;
 @inject IUserDataService userDataService;
 @inject IPacienteService pacienteService;
+@inject IConsultaService consultaService;
+
+@if (Consulta is not null && Consulta.Data > DateTime.UtcNow.AddHours(-3))
+{
+	<div class="text-center text-primary fw-bold h4 my-4">
+		Este paciente esta com uma consulta agendada para o dia @Consulta.Data
+	</div>
+	<div class="text-center text-info fw-bold h4 my-4">
+		@Consulta.Descricao
+	</div>
+}
 
 <div class="details-parent-div">
 	<div class="details-div"> 
@@ -9,7 +20,7 @@
 			Nome
 		</div>
 		<div>
-			@Paciente.Nome @Paciente.Sobrenome
+			@Paciente!.Nome @Paciente.Sobrenome
 		</div>
 	</div>
 	<div class="details-div">
@@ -106,7 +117,6 @@
 	</div>
 </div>
 
-
 <div class="paciente-details-options-div">
 	<div class="voltar-button-div">
 		<a href="agendamento/@Paciente.Id" class="first-style-button">
@@ -125,33 +135,39 @@
 	</div>
 </div>
 
-
-
 @code {
 	[Parameter]
 	public string? PacienteId { get; set; }
 	private Guid LoggedInUserId { get; set; }
 	private PacienteModel? Paciente { get; set; }
+	private ConsultaModel? Consulta { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
-		await GetLoggedInUserId();
+		await PageVerification();
+	}
+
+	private async Task PageVerification()
+	{
+		if (PacienteId is null)
+		{
+			navManager.NavigateTo("/");	
+		}	
+
+		LoggedInUserId = await userDataService.GetLoggedInUserId();
 
 		if (LoggedInUserId == Guid.Empty)
 		{
 			navManager.NavigateTo("/login");
 		}
 
-		await GetPacienteById();
-	}
+		Paciente = await pacienteService.GetPacienteById(new Guid(PacienteId!));
 
-	private async Task GetLoggedInUserId()
-	{
-		LoggedInUserId = await userDataService.GetLoggedInUserId();
-	}
+		if (Paciente is null)
+		{
+			navManager.NavigateTo("/");
+		}
 
-	private async Task GetPacienteById()
-	{
-		Paciente = await pacienteService.GetPacienteById(new Guid(PacienteId));
+		Consulta = await consultaService.GetConsultaByPacienteId(Paciente!.Id);
 	}
 }

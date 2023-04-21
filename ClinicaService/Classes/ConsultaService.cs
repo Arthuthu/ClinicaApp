@@ -27,20 +27,37 @@ public class ConsultaService : IConsultaService
         return await _consultaRepository.GetConsultaById(id);
     }
 
-    public async Task<ConsultaModel> CreateConsulta(ConsultaModel consulta)
+    public Task<IEnumerable<ConsultaModel>> GetConsultasByPacienteId(Guid clinicaId, Guid pacienteId)
     {
-        if (consulta.Data <= DateTime.Today)
+		return _consultaRepository.GetConsultasByPacienteId(clinicaId, pacienteId);
+	}
+
+	public async Task<IList<string>> CreateConsulta(ConsultaModel consulta)
+    {
+        IList<string> registrationMessages = new List<string>();
+
+        if (consulta.Data <= DateTime.UtcNow.AddHours(-3))
         {
-            //Criar a list of string "Não é possivel criar consulta antes de hoje
-            // Adicionar hora para a consulta
+            registrationMessages.Add("Não é possivel agendar uma consulta em uma data que não seja futura");
+
+            return registrationMessages;
         }
 
-        consulta.Id = Guid.NewGuid();
-        consulta.CreatedDate = DateTime.UtcNow.AddHours(-3);
+        try
+        {
+            consulta.Id = Guid.NewGuid();
+            consulta.CreatedDate = DateTime.UtcNow.AddHours(-3);
 
-        await _consultaRepository.CreateConsulta(consulta);
+            await _consultaRepository.CreateConsulta(consulta);
 
-        return consulta;
+            registrationMessages.Add("Consulta agendada com sucesso");
+        }
+        catch (Exception ex)
+        {
+            registrationMessages.Add($"Não foi possivel agendar a consulta {ex.Message}");
+        }
+
+        return registrationMessages;
     }
 
     public Task UpdateConsulta(ConsultaModel paciente)

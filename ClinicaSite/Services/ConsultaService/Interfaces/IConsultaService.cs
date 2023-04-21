@@ -8,6 +8,7 @@ namespace ClinicaSite.Services.ConsultaService.Interfaces
         Task<string> DeleteConsulta(Guid id);
         Task<IList<ConsultaModel>?> GetAllConsultas(Guid clinicaId);
         Task<ConsultaModel> GetConsultaById(Guid id);
+        Task<List<ConsultaModel>> GetConsultasByPacienteId(Guid clinicaId, Guid pacienteId);
         Task<string> UpdateConsulta(ConsultaModel clinica);
     }
 }

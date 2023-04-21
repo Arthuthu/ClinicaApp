@@ -60,11 +60,11 @@ public class ClinicaClassService : IClinicaClassService
 		try
 		{
 			await _clinicaRepository.CreateClinica(createdUser);
-			registrationMessages.Add("Usuario registrado com sucesso");
+			registrationMessages.Add("Clinica registrada com sucesso");
 		}
 		catch (Exception ex)
 		{
-			registrationMessages.Add($"Ocorreu um erro durante o registro de usuario {ex.Message}");
+			registrationMessages.Add($"Ocorreu um erro durante o registro da clinica {ex.Message}");
 		}
 
 		return registrationMessages;
@@ -86,14 +86,14 @@ public class ClinicaClassService : IClinicaClassService
 
 		if (verifyClinica is false)
 		{
-			throw new Exception("Usuario ou senha incorretos");
+			throw new Exception("Nome da clinica ou senha incorretos");
 		}
 
 		bool verifyPassword = await VerifyIfPasswordIsCorrect(clinica);
 
 		if (verifyPassword is false)
 		{
-			throw new Exception("Usuario ou senha incorretos");
+			throw new Exception("Nome da clinica ou senha incorretos");
 		}
 
 		var requestedLogInUser = await _clinicaRepository.GetClinicaByName(clinica);

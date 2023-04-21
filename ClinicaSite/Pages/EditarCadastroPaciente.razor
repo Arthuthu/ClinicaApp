@@ -95,7 +95,7 @@
 
 <div class="voltar-button-cadastro">
 	<div class="voltar-button-div">
-		<a href="#" class="first-style-button">
+		<a href="pacientedetails/@Paciente!.Id" class="first-style-button">
 			Voltar
 		</a>
 	</div>
@@ -109,34 +109,34 @@
 
 	protected override async Task OnInitializedAsync()
 	{
-		await GetLoggedInUserId();
+		await PageVerification();
+	}
+
+	protected override async Task OnParametersSetAsync()
+	{
+		await PageVerification();
+	}
+
+	private async Task PageVerification()
+	{
+		LoggedInUserId = await userDataService.GetLoggedInUserId();
 
 		if (LoggedInUserId == Guid.Empty)
 		{
 			navManager.NavigateTo("/login");
 		}
 
-		await GetPacienteModel();
+		Paciente = await pacienteService.GetPacienteById(new Guid(PacienteId!));
 
 		if (Paciente is null)
 		{
-			navManager.NavigateTo("/");	
+			navManager.NavigateTo("/");
 		}
 
-		if (Paciente.ClinicaId != LoggedInUserId)
+		if (Paciente!.ClinicaId != LoggedInUserId)
 		{
 			navManager.NavigateTo("/");
 		}
-	}
-
-	private async Task GetLoggedInUserId()
-	{
-		LoggedInUserId = await userDataService.GetLoggedInUserId();
-	}
-
-	private async Task GetPacienteModel()
-	{
-		Paciente = await pacienteService.GetPacienteById(new Guid(PacienteId!));
 	}
 
 	private async Task UpdatePaciente()

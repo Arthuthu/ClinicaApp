@@ -32,7 +32,7 @@ public class RegistrationService : IRegistrationService
 
 		if (authResult.IsSuccessStatusCode is false)
 		{
-			_logger.LogInformation($"Ocorreu um eror durante o registro de conta de usuario {authContent}");
+			_logger.LogInformation($"Ocorreu um eror durante o registro de conta da clinica {authContent}");
 			return authContent;
 		}
 

@@ -173,29 +173,6 @@
     background-color: #1BA300;
 }
 
-.buscar-buttons-parent-div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 30px 0 0 0;
-}
-
-.buscar-buttons-second-div {
-    display: flex;
-    align-items: center;
-    width: 100%;
-}
-
-.index-search-input {
-    font-size: 20px;
-    padding: 20px 0 20px 5px;
-    margin: 0 0 0 5px;
-    width: 98%;
-}
-
-.index-search-input-div {
-    width: 100%;
-}
 
 /* Cadastro */
 
@@ -307,41 +284,51 @@
 
 /* Index */
 
-.index-saudacoes-div {
-    text-align: center;
-    margin: 20px 0;
-    font-size: 25px;
-    font-weight: bold;
-}
-
 .index-buttons-div {
     text-align: center;
-    margin: 20px 0 0 0;
+    margin: 20px 0;
 }
 
-.index-button,
-.index-anchor{
+.index-button {
     background-color: var(--main-background-color);
     color: white;
     padding: 20px 30px;
     font-size: 25px;
     font-weight: bold;
     text-decoration: none;
+    border-color: transparent;
 }
 
-.index-button:hover,
-.index-anchor:hover{
+.index-button:hover {
     color: white;
     transition: 500ms;
     background-color: #22CF00;
 }
 
-.index-anchor {
-    padding: 24px 25px;
-} 
+/* Pacientes */
 
-.index-button {
+.pacientes-search-div {
+    background-color: var(--main-background-color);
+    border-radius: 10px;
     border-color: transparent;
+    padding: 10px;
+}
+
+.paciente-search-input-button-div {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.pacientes-search-input {
+    font-size: 20px;
+    padding: 20px 0 20px 5px;
+    margin: 0 0 0 5px;
+    width: 98%;
+}
+
+.pacientes-search-input-div {
+    width: 100%;
 }
 
 .pacientes-label {
@@ -378,11 +365,11 @@
     color: #000;
 }
 
-.pacientes-box:hover {
-    color: #000;
-    background-color: #C2C2C2;
-    transition: 500ms;
-}
+    .pacientes-box:hover {
+        color: #000;
+        background-color: #C2C2C2;
+        transition: 500ms;
+    }
 
 .paciente-nome-div {
     width: 60%;
@@ -397,7 +384,7 @@
     margin-right: 215%;
 }
 
-#index-buscar-button {
+#pacientes-buscar-button {
     border-radius: 0px;
     border-color: transparent;
     padding: 18px 15px;

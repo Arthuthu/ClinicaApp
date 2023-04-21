@@ -8,6 +8,7 @@ namespace ClinicaRepository.Interfaces
         Task DeleteConsulta(Guid id);
         Task<IEnumerable<ConsultaModel>> GetAllConsultas(Guid clinicaId);
         Task<ConsultaModel?> GetConsultaById(Guid id);
+        Task<IEnumerable<ConsultaModel>> GetConsultasByPacienteId(Guid clinicaId, Guid pacienteId);
         Task UpdateConsulta(ConsultaModel consulta);
     }
 }

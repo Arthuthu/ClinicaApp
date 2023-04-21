@@ -8,14 +8,45 @@
     Agende uma consulta para @Paciente!.Nome @Paciente.Sobrenome
 </div>
 
+@if (PacienteHasActiveConsulta is true)
+{
+    <div class="text-center text-danger h4 fw-bold">
+        O paciente ja possui uma consulta agendada, caso crie outra, a sua consulta antiga sera substituida
+    </div>
+}
+
 <EditForm Model="Consulta" OnValidSubmit="CreateConsulta">
     <div class="text-center">
         <div class="fw-bold h4">
             Data
         </div>
         <div class="my-4">
-            <InputDate TValue="DateTime" id="date" ValueExpression="@(() => Consulta.Data)"
-                       @bind-value="Consulta.Data" placeholder="Escolha uma data" class="date-input"/>
+            <div>
+                <InputDate TValue="DateTime" id="date" ValueExpression="@(() => Consulta.Data)"
+                    @bind-value="Consulta.Data" placeholder="Escolha uma data" class="date-input" />
+            </div>
+
+        </div>
+
+        <div class="d-flex justify-content-center mb-md-5">
+            <div class="mx-4">
+                <div class="fw-bold h5">
+                    Hora
+                </div>
+                <div>
+                    <InputText id="hora" placeholder="Digite a hora (0 a 23)" @bind-Value="Hora"
+                    class="fs-5"></InputText>
+                </div>
+            </div>
+            <div class="mx-4">
+                <div class="fw-bold h5">
+                    Minutos
+                </div>
+                <div>
+                    <InputText id="minutos" placeholder="Digite os minutos (0 a 59)" @bind-Value="Minutos"
+                    class="fs-5"></InputText>
+                </div>
+            </div>
         </div>
 
         <div>
@@ -23,10 +54,17 @@
                            placeholder="Digite uma descrição (Não obrigatório)" class="textarea-input" />
         </div>
 
-        <div class="text-center my-4">
-            <button type="submit" class="index-button">
-                Agendar consulta
-            </button>
+        <div class="d-flex justify-content-around my-4">
+            <div>
+                <button class="index-button">
+                    Voltar
+                </button>
+            </div>
+            <div>
+                <a type="submit" class="index-button" href="pacientedetails/@Paciente!.Id">
+                    Agendar consulta
+                </a>
+            </div>
         </div>
     </div>
 </EditForm>
@@ -41,6 +79,10 @@
     private Guid LoggedInUserId { get; set; }
     private PacienteModel? Paciente { get; set; }
     private ConsultaModel Consulta = new();
+    private List<ConsultaModel>? ConsultasRegistradas { get; set; }
+    private bool PacienteHasActiveConsulta = false;
+    private string? Hora;
+    private string? Minutos;
     private string? responseMessage = "";
 
     protected override async Task OnInitializedAsync()
@@ -57,7 +99,7 @@
     {
         if (PacienteId is null)
         {
-            navManager.NavigateTo("/index");
+            navManager.NavigateTo("/");
         }
 
         LoggedInUserId = await userService.GetLoggedInUserId();
@@ -71,15 +113,92 @@
 
         if (Paciente is null)
         {
-            navManager.NavigateTo("/index");
+            navManager.NavigateTo("/");
         }
+
+        ConsultasRegistradas = await consultaService.GetConsultasByPacienteId(LoggedInUserId, Paciente!.Id);
     }
 
     private async Task CreateConsulta()
     {
+        bool isHourValid = IsHourValid();
+
+        if (isHourValid is true)
+        {
+            InsertConsultaValues();
+
+            if (PacienteHasActiveConsulta is true)
+            {
+                await RemoveActiveConsulta();
+            }
+
+            responseMessage = await consultaService.CreateConsulta(Consulta);
+
+            if (responseMessage == "Consulta agendada com sucesso")
+            {
+                navManager.NavigateTo($"/pacientedetails/{Paciente!.Id}");
+            }
+        }
+    }
+
+    private bool IsHourValid()
+    {
+        int hora = int.Parse(Hora!);
+        int minutos = int.Parse(Minutos!);
+
+        if (hora < 0 || hora > 23)
+        {
+            responseMessage = "Hora não esta com um valor válido";
+
+            return false;
+        }
+        else if (minutos < 0 || minutos > 59)
+        {
+            responseMessage = "Minutos não está com um valor válido";
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private void InsertConsultaValues()
+    {
+        int hora = int.Parse(Hora!);
+        int minutos = int.Parse(Minutos!);
+
+        Consulta.Data = Consulta.Data.AddHours(hora);
+        Consulta.Data = Consulta.Data.AddMinutes(minutos);
         Consulta.ClinicaId = LoggedInUserId;
         Consulta.PacienteId = Paciente!.Id;
+    }
 
-        responseMessage = await consultaService.CreateConsulta(Consulta);
+    private void VerifiyForActiveConsulta()
+    {
+        if (ConsultasRegistradas is not null)
+        {
+            foreach (var consulta in ConsultasRegistradas)
+            {
+                if (consulta.Data > DateTime.UtcNow.AddHours(-3))
+                {
+                    PacienteHasActiveConsulta =  true;
+                }
+            }
+
+            PacienteHasActiveConsulta =  false;
+        }
+
+        PacienteHasActiveConsulta =  false;
+    }
+
+    private async Task RemoveActiveConsulta()
+    {
+        foreach (var consulta in ConsultasRegistradas!)
+        {
+            if (consulta.Data > DateTime.UtcNow.AddHours(-3))
+            {
+                await consultaService.DeleteConsulta(consulta.Id);
+            }
+        }
     }
 }
