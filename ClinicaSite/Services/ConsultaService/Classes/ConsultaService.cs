@@ -67,8 +67,8 @@ public class ConsultaService : IConsultaService
 
 	public async Task<List<ConsultaModel>> GetConsultasByPacienteId(Guid clinicaId, Guid pacienteId)
 	{
-		string getConsultaByPacienteIdEndpoint = _config["apiLocation"] + _config["getConsultaByPacienteIdEndpoint"] + $"/{clinicaId}" + $"/{pacienteId}";
-		var authResult = await _client.GetAsync(getConsultaByPacienteIdEndpoint);
+		string getConsultasByPacienteIdEndpoint = _config["apiLocation"] + _config["getConsultasByPacienteIdEndpoint"] + $"/{clinicaId}" + $"/{pacienteId}";
+		var authResult = await _client.GetAsync(getConsultasByPacienteIdEndpoint);
 		var authContent = await authResult.Content.ReadAsStringAsync();
 
 		if (authResult.IsSuccessStatusCode is false)

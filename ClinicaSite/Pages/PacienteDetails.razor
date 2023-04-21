@@ -4,7 +4,7 @@
 @inject IPacienteService pacienteService;
 @inject IConsultaService consultaService;
 
-@if (Consulta is not null && Consulta.Data > DateTime.UtcNow.AddHours(-3))
+@if (Consulta is not null)
 {
 	<div class="text-center text-primary fw-bold h4 my-4">
 		Este paciente esta com uma consulta agendada para o dia @Consulta.Data
@@ -141,6 +141,7 @@
 	private Guid LoggedInUserId { get; set; }
 	private PacienteModel? Paciente { get; set; }
 	private ConsultaModel? Consulta { get; set; }
+	private List<ConsultaModel>? Consultas { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -168,6 +169,22 @@
 			navManager.NavigateTo("/");
 		}
 
-		Consulta = await consultaService.GetConsultaByPacienteId(Paciente!.Id);
+		Consultas = await consultaService.GetConsultasByPacienteId(LoggedInUserId, Paciente!.Id);
+
+		GetActiveConsulta();
+	}
+
+	private void GetActiveConsulta()
+	{
+		if (Consultas is not null)
+		{
+			foreach (var consulta in Consultas)
+			{
+				if (consulta.Data > DateTime.UtcNow.AddHours(-3))
+				{
+					Consulta = consulta;
+				}
+			}
+		}
 	}
 }

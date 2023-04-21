@@ -4,74 +4,77 @@
 @inject IConsultaService consultaService
 @inject NavigationManager navManager
 
-<div class="text-center fw-bold h4 my-4">
-    Agende uma consulta para @Paciente!.Nome @Paciente.Sobrenome
-</div>
-
-@if (PacienteHasActiveConsulta is true)
+@if (isInitialized)
 {
-    <div class="text-center text-danger h4 fw-bold">
-        O paciente ja possui uma consulta agendada, caso crie outra, a sua consulta antiga sera substituida
+    <div class="text-center fw-bold h4 my-4">
+        Agende uma consulta para @Paciente!.Nome @Paciente.Sobrenome
+    </div>
+
+    @if (PacienteHasActiveConsulta is true)
+    {
+        <div class="text-center text-danger h4 fw-bold my-4">
+            O paciente ja possui uma consulta agendada, caso crie outra, a sua consulta antiga sera substituida
+        </div>
+    }
+
+    <EditForm Model="Consulta" OnValidSubmit="CreateConsulta">
+        <div class="text-center">
+            <div class="fw-bold h4">
+                Data
+            </div>
+            <div class="my-4">
+                <div>
+                    <InputDate TValue="DateTime" id="date" ValueExpression="@(() => Consulta.Data)"
+                           @bind-value="Consulta.Data" placeholder="Escolha uma data" class="date-input" />
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-center mb-md-5">
+                <div class="mx-4">
+                    <div class="fw-bold h5">
+                        Hora
+                    </div>
+                    <div>
+                        <InputText id="hora" placeholder="Digite a hora (0 a 23)" @bind-Value="Hora"
+                                   class="fs-5"></InputText>
+                    </div>
+                </div>
+                <div class="mx-4">
+                    <div class="fw-bold h5">
+                        Minutos
+                    </div>
+                    <div>
+                        <InputText id="minutos" placeholder="Digite os minutos (0 a 59)" @bind-Value="Minutos"
+                                   class="fs-5"></InputText>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <InputTextArea id="descricao" @bind-Value="Consulta.Descricao"
+                               placeholder="Digite uma descrição (Não obrigatório)" class="textarea-input" />
+            </div>
+
+            <div class="d-flex justify-content-around my-4">
+                <div class="my-4">
+                    <a class="index-button" href="/pacientedetails/@Paciente.Id">
+                        Voltar
+                    </a>
+                </div>
+                <div>
+                    <button type="submit" class="index-button">
+                        Agendar consulta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+
+    <div class="text-center fw-bold h4 my-4">
+        @responseMessage
     </div>
 }
-
-<EditForm Model="Consulta" OnValidSubmit="CreateConsulta">
-    <div class="text-center">
-        <div class="fw-bold h4">
-            Data
-        </div>
-        <div class="my-4">
-            <div>
-                <InputDate TValue="DateTime" id="date" ValueExpression="@(() => Consulta.Data)"
-                    @bind-value="Consulta.Data" placeholder="Escolha uma data" class="date-input" />
-            </div>
-
-        </div>
-
-        <div class="d-flex justify-content-center mb-md-5">
-            <div class="mx-4">
-                <div class="fw-bold h5">
-                    Hora
-                </div>
-                <div>
-                    <InputText id="hora" placeholder="Digite a hora (0 a 23)" @bind-Value="Hora"
-                    class="fs-5"></InputText>
-                </div>
-            </div>
-            <div class="mx-4">
-                <div class="fw-bold h5">
-                    Minutos
-                </div>
-                <div>
-                    <InputText id="minutos" placeholder="Digite os minutos (0 a 59)" @bind-Value="Minutos"
-                    class="fs-5"></InputText>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <InputTextArea id="descricao" @bind-Value="Consulta.Descricao"
-                           placeholder="Digite uma descrição (Não obrigatório)" class="textarea-input" />
-        </div>
-
-        <div class="d-flex justify-content-around my-4">
-            <div>
-                <button class="index-button">
-                    Voltar
-                </button>
-            </div>
-            <div>
-                <a type="submit" class="index-button" href="pacientedetails/@Paciente!.Id">
-                    Agendar consulta
-                </a>
-            </div>
-        </div>
-    </div>
-</EditForm>
-
-<div class="text-center fw-bold h4 my-4">
-    @responseMessage
-</div>
 
 @code {
     [Parameter]
@@ -84,6 +87,7 @@
     private string? Hora;
     private string? Minutos;
     private string? responseMessage = "";
+    private bool isInitialized = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -117,6 +121,10 @@
         }
 
         ConsultasRegistradas = await consultaService.GetConsultasByPacienteId(LoggedInUserId, Paciente!.Id);
+
+        VerifiyForActiveConsulta();
+
+        isInitialized = true;
     }
 
     private async Task CreateConsulta()
@@ -173,7 +181,7 @@
         Consulta.PacienteId = Paciente!.Id;
     }
 
-    private void VerifiyForActiveConsulta()
+    private bool VerifiyForActiveConsulta()
     {
         if (ConsultasRegistradas is not null)
         {
@@ -181,14 +189,17 @@
             {
                 if (consulta.Data > DateTime.UtcNow.AddHours(-3))
                 {
-                    PacienteHasActiveConsulta =  true;
+                    PacienteHasActiveConsulta = true;
+
+                    return true;
                 }
             }
+            PacienteHasActiveConsulta = false;
 
-            PacienteHasActiveConsulta =  false;
+            return false;
         }
 
-        PacienteHasActiveConsulta =  false;
+        return false;
     }
 
     private async Task RemoveActiveConsulta()

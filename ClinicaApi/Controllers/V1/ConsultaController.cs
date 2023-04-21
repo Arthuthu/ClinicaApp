@@ -30,7 +30,7 @@ public class ConsultaController : ControllerBase
     public async Task<ActionResult<List<ConsultaResponse>>> GetAllConsultas(Guid clinicaId)
     {
         var consultas = await _consultaService.GetAllConsultas(clinicaId);
-        var responseConsultas = consultas.Select(paciente => _mapper.Map<ConsultaResponse>(consultas));
+        var responseConsultas = consultas.Select(consulta => _mapper.Map<ConsultaResponse>(consulta));
 
         return Ok(responseConsultas);
     }
@@ -47,13 +47,14 @@ public class ConsultaController : ControllerBase
 
 	[Route("/getconsultasbypacienteid/{clinicaid}/{pacienteId}")]
 	[HttpGet]
-	public async Task<ActionResult<ConsultaResponse>> GetConsultaByPacienteId(Guid clinicaId, Guid pacienteId)
+	public async Task<ActionResult<ConsultaResponse>> GetConsultasByPacienteId(Guid clinicaId, Guid pacienteId)
 	{
-        var consultas = await _consultaService.GetConsultasByPacienteId(clinicaId, pacienteId);
-        var responseConsultas = consultas.Select(paciente => _mapper.Map<ConsultaResponse>(consultas));
+		var consultas = await _consultaService.GetConsultasByPacienteId(clinicaId, pacienteId);
+		var responseConsultas = consultas.Select(consulta => _mapper.Map<ConsultaResponse>(consulta));
 
-        return Ok(responseConsultas);
-    }
+
+		return Ok(responseConsultas);
+	}
 
 	[Route("/createconsulta")]
     [HttpPost]
