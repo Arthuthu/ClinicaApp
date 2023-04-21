@@ -1,0 +1,34 @@
+﻿@inject IPacienteService pacienteService
+@inject IConsultaService consultaService
+
+@if (Consultas is not null)
+{
+	<Virtualize Items="Consultas" Context="consulta" OverscanCount="20">
+		<div class="historico-consultas-box">
+			<div>
+				@consulta.Data
+			</div>
+			<div>
+				@consulta.Descricao
+			</div>
+		</div>
+	</Virtualize>
+}
+
+@code {
+	[Parameter]
+	public string? PacienteId { get; set; }
+	private Guid LoggedInUserId { get; set; }
+	private PacienteModel? Paciente { get; set; }
+	private IList<ConsultaModel>? Consultas { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		Paciente = await pacienteService.GetPacienteById(new Guid(PacienteId!));
+
+		if (Paciente is not null)
+		{
+			Consultas = await consultaService.GetConsultasByPacienteId(LoggedInUserId, Paciente.Id);
+		}
+	}
+}

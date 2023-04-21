@@ -4,136 +4,151 @@
 @inject IPacienteService pacienteService;
 @inject IConsultaService consultaService;
 
-@if (Consulta is not null)
+@if (isInitialized)
 {
-	<div class="text-center text-primary fw-bold h4 my-4">
-		Este paciente esta com uma consulta agendada para o dia @Consulta.Data
+	@if (Consulta is not null)
+	{
+		<div class="text-center text-primary fw-bold h4 my-4">
+			Este paciente esta com uma consulta agendada para o dia @Consulta.Data
+		</div>
+		<div class="text-center text-info fw-bold h4 my-4">
+			@Consulta.Descricao
+		</div>
+	}
+
+	<div class="details-parent-div">
+		<div class="details-div">
+			<div class="details-label">
+				Nome
+			</div>
+			<div>
+				@Paciente!.Nome @Paciente.Sobrenome
+			</div>
+		</div>
+		<div class="details-div">
+			<div class="details-label">
+				CPF
+			</div>
+			<div>
+				@Paciente.CPF
+			</div>
+		</div>
+
+		<div class="details-endereco-label">
+			Endereço
+		</div>
+		<div class="details-endereco-first-main-div">
+			<div class="text-center">
+				<div class="details-label">
+					CEP
+				</div>
+				<div>
+					@Paciente.CEP
+				</div>
+			</div>
+
+			<div class="text-center">
+				<div class="details-label">
+					Estado
+				</div>
+				<div>
+					@Paciente.Estado
+				</div>
+			</div>
+
+			<div class="text-center">
+				<div class="details-label">
+					Cidade
+				</div>
+				<div>
+					@Paciente.Cidade
+				</div>
+			</div>
+		</div>
+
+		<div class="details-endereco-first-main-div">
+			<div class="text-center">
+				<div class="details-label">
+					Bairro
+				</div>
+				<div>
+					@Paciente.Bairro
+				</div>
+			</div>
+
+			<div class="text-center">
+				<div class="details-label">
+					Rua
+				</div>
+				<div>
+					@Paciente.Rua
+				</div>
+			</div>
+
+			<div class="text-center">
+				<div class="details-label">
+					Numero
+				</div>
+				<div>
+					@Paciente.NumeroRua
+				</div>
+			</div>
+		</div>
+
+		<div class="details-contato-label">
+			Contato
+		</div>
+		<div class="details-endereco-first-main-div">
+			<div class="text-center">
+				<div class="details-label">
+					Celular
+				</div>
+				<div>
+					@Paciente.Cel
+				</div>
+			</div>
+
+			<div class="text-center">
+				<div class="details-label">
+					Email
+				</div>
+				<div>
+					@Paciente.Email
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="text-center text-info fw-bold h4 my-4">
-		@Consulta.Descricao
+
+	@if (showHistoricoConsultas)
+	{
+		<div class="my-4">
+			<HistoricoConsulta PacienteId="PacienteId" />
+		</div>
+	}
+
+	<div class="paciente-details-options-div">
+		<div class="voltar-button-div">
+			<a href="agendamento/@Paciente.Id" class="first-style-button">
+				Agendar consulta
+			</a>
+		</div>
+		<div class="voltar-button-div">
+			<a href="editarcadastropaciente/@Paciente.Id" class="first-style-button">
+				Editar
+			</a>
+		</div>
+		<div class="voltar-button-div">
+			<button @onclick="ToggleShowHistoricoConsultas" class="first-style-button">
+				Histórico Consulta
+			</button>
+		</div>
+		<div class="voltar-button-div">
+			<a href="#" class="first-style-button">
+				Voltar
+			</a>
+		</div>
 	</div>
 }
-
-<div class="details-parent-div">
-	<div class="details-div"> 
-		<div class="details-label">
-			Nome
-		</div>
-		<div>
-			@Paciente!.Nome @Paciente.Sobrenome
-		</div>
-	</div>
-	<div class="details-div">
-		<div class="details-label">
-			CPF
-		</div>
-		<div>
-			@Paciente.CPF
-		</div>
-	</div>
-
-	<div class="details-endereco-label">
-		Endereço
-	</div>
-	<div class="details-endereco-first-main-div">
-		<div class="text-center">
-			<div class="details-label">
-				CEP
-			</div>
-			<div>
-				@Paciente.CEP
-			</div>
-		</div>
-
-		<div class="text-center">
-			<div class="details-label">
-				Estado
-			</div>
-			<div>
-				@Paciente.Estado
-			</div>
-		</div>
-
-		<div class="text-center">
-			<div class="details-label">
-				Cidade
-			</div>
-			<div>
-				@Paciente.Cidade
-			</div>
-		</div>
-	</div>
-
-	<div class="details-endereco-first-main-div">
-		<div class="text-center">
-			<div class="details-label">
-				Bairro
-			</div>
-			<div>
-				@Paciente.Bairro
-			</div>
-		</div>
-
-		<div class="text-center">
-			<div class="details-label">
-				Rua
-			</div>
-			<div>
-				@Paciente.Rua
-			</div>
-		</div>
-
-		<div class="text-center">
-			<div class="details-label">
-				Numero
-			</div>
-			<div>
-				@Paciente.NumeroRua
-			</div>
-		</div>
-	</div>
-
-	<div class="details-contato-label">
-		Contato
-	</div>
-	<div class="details-endereco-first-main-div">
-		<div class="text-center">
-			<div class="details-label">
-				Celular
-			</div>
-			<div>
-				@Paciente.Cel
-			</div>
-		</div>
-
-		<div class="text-center">
-			<div class="details-label">
-				Email
-			</div>
-			<div>
-				@Paciente.Email
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="paciente-details-options-div">
-	<div class="voltar-button-div">
-		<a href="agendamento/@Paciente.Id" class="first-style-button">
-			Agendar consulta
-		</a>
-	</div>
-	<div class="voltar-button-div">
-		<a href="editarcadastropaciente/@Paciente.Id" class="first-style-button">
-			Editar
-		</a>
-	</div>
-	<div class="voltar-button-div">
-		<a href="#" class="first-style-button">
-			Voltar
-		</a>
-	</div>
-</div>
 
 @code {
 	[Parameter]
@@ -142,6 +157,8 @@
 	private PacienteModel? Paciente { get; set; }
 	private ConsultaModel? Consulta { get; set; }
 	private List<ConsultaModel>? Consultas { get; set; }
+	private bool showHistoricoConsultas = false;
+	private bool isInitialized = false;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -169,9 +186,16 @@
 			navManager.NavigateTo("/");
 		}
 
+		if (Paciente!.ClinicaId != LoggedInUserId)
+		{
+			navManager.NavigateTo("/");
+		}
+
 		Consultas = await consultaService.GetConsultasByPacienteId(LoggedInUserId, Paciente!.Id);
 
 		GetActiveConsulta();
+
+		isInitialized = true;
 	}
 
 	private void GetActiveConsulta()
@@ -186,5 +210,12 @@
 				}
 			}
 		}
+	}
+
+	//Toggles
+
+	private void ToggleShowHistoricoConsultas()
+	{
+		showHistoricoConsultas = !showHistoricoConsultas;
 	}
 }

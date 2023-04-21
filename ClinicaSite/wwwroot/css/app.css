@@ -463,3 +463,10 @@
     width: 100%;
     padding-bottom: 20px;
 }
+
+/* Historico Consultas */
+
+.historico-consultas-box{
+    text-align: center;
+    border: solid #000
+}

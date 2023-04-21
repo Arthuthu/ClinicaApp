@@ -120,6 +120,11 @@
             navManager.NavigateTo("/");
         }
 
+        if (Paciente!.ClinicaId != LoggedInUserId)
+        {
+            navManager.NavigateTo("/");
+        }
+
         ConsultasRegistradas = await consultaService.GetConsultasByPacienteId(LoggedInUserId, Paciente!.Id);
 
         VerifiyForActiveConsulta();
