@@ -1,8 +1,12 @@
 ﻿@inject IPacienteService pacienteService
 @inject IConsultaService consultaService
+@inject IUserDataService userDataService
 
 @if (Consultas is not null)
 {
+	<div class="historico-consultas-label">
+		Consultas
+	</div>
 	<Virtualize Items="Consultas" Context="consulta" OverscanCount="20">
 		<div class="historico-consultas-box">
 			<div>
@@ -25,6 +29,7 @@
 	protected override async Task OnInitializedAsync()
 	{
 		Paciente = await pacienteService.GetPacienteById(new Guid(PacienteId!));
+		LoggedInUserId = await userDataService.GetLoggedInUserId();
 
 		if (Paciente is not null)
 		{

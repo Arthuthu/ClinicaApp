@@ -122,28 +122,29 @@
 	@if (showHistoricoConsultas)
 	{
 		<div class="my-4">
-			<HistoricoConsulta PacienteId="PacienteId" />
+			<HistoricoConsulta PacienteId="@PacienteId" />
 		</div>
 	}
 
 	<div class="paciente-details-options-div">
 		<div class="voltar-button-div">
-			<a href="agendamento/@Paciente.Id" class="first-style-button">
+			<a href="agendamento/@Paciente.Id" class="index-button">
 				Agendar consulta
 			</a>
 		</div>
 		<div class="voltar-button-div">
-			<a href="editarcadastropaciente/@Paciente.Id" class="first-style-button">
+			<a href="editarcadastropaciente/@Paciente.Id" class="index-button">
 				Editar
 			</a>
 		</div>
 		<div class="voltar-button-div">
-			<button @onclick="ToggleShowHistoricoConsultas" class="first-style-button">
-				Histórico Consulta
+			<button @onclick="ToggleShowHistoricoConsultas" class="index-button" 
+			id="historico-consultas-button">
+				Histórico Consultas
 			</button>
 		</div>
 		<div class="voltar-button-div">
-			<a href="#" class="first-style-button">
+			<a href="#" class="index-button">
 				Voltar
 			</a>
 		</div>
