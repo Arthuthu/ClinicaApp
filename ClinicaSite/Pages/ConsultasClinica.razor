@@ -13,6 +13,14 @@
 			Consultas ativas
 		</button>
 	</div>
+	<div>
+		<EditForm>
+					<button class="index-button" @onclick="GetConsultasByDateRange">
+			Pesquisar por data
+		</button>
+		</EditForm>
+
+	</div>
 </div>
 
 @if (onlyActiveConsultas is true)
@@ -82,6 +90,16 @@
 			Consultas = Consultas.Where(x => x.Data > DateTime.Today).OrderBy(x => x.Data).ToList();
 
 			onlyActiveConsultas = true;
+		}
+	}
+
+	private async Task GetConsultasByDateRange(DateTime firstDate, DateTime secondDate)
+	{
+		await GetAllConsultas();
+
+		if (Consultas is not null)
+		{
+			Consultas = Consultas.Where(x => x.Data > firstDate && x.Data < secondDate).ToList();
 		}
 	}
 }
