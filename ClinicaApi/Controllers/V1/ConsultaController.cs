@@ -58,7 +58,7 @@ public class ConsultaController : ControllerBase
 
 	[Route("/createconsulta")]
     [HttpPost]
-    public async Task<ActionResult<List<ConsultaResponse>>> RegisterConsulta([FromForm] ConsultaRequest consulta)
+    public async Task<ActionResult<List<ConsultaResponse>>> CreateConsulta([FromForm] ConsultaRequest consulta)
     {
         var requestConsulta = _mapper.Map<ConsultaModel>(consulta);
         var consultaCreationMessages = await _consultaService.CreateConsulta(requestConsulta);

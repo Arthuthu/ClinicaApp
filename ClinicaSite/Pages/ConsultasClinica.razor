@@ -1,0 +1,87 @@
+﻿@inject IConsultaService consultaService
+@inject IUserDataService userDataService
+@inject IPacienteService pacienteService
+
+<div class="d-flex my-4 justify-content-center">
+	<div>
+		<button class="index-button" @onclick="GetAllConsultas">
+			Todas as consultas
+		</button>
+	</div>
+	<div>
+		<button class="index-button" @onclick="GetAllActiveConsultas">
+			Consultas ativas
+		</button>
+	</div>
+</div>
+
+@if (onlyActiveConsultas is true)
+{
+	<div class="text-center h4 my-4 text-success fw-bold">
+		Consultas ativas
+	</div>
+}
+
+@if (onlyActiveConsultas is false)
+{
+	<div class="text-center h4 my-4 text-primary fw-bold">
+		Todas as consulta
+	</div>
+}
+
+<Virtualize Items="Consultas" Context="consulta" OverscanCount="20">
+	<div class="historico-consultas-box">
+		<div class="d-flex justify-content-center mb-2">
+			<div class="fw-bold mx-2">
+				@consulta.PacienteNome
+			</div>
+			<div class="fw-bold mx-2">
+				@consulta.PacienteCel
+			</div>
+		</div>
+		<div>
+			@consulta.Data
+		</div>
+		<div>
+			@consulta.Descricao
+		</div>
+	</div>
+</Virtualize>
+
+@code {
+	private Guid LoggedInUserId { get; set; }
+	private IList<ConsultaModel>? Consultas { get; set; }
+	private IList<PacienteModel>? Pacientes { get; set; }
+	private bool onlyActiveConsultas = true;
+
+	protected override async Task OnInitializedAsync()
+	{
+		LoggedInUserId = await userDataService.GetLoggedInUserId();
+
+		await GetAllActiveConsultas();
+
+		if (Consultas is not null)
+		{
+			Pacientes = await pacienteService.GetAllPacientes(LoggedInUserId);
+		}
+	}
+
+	private async Task GetAllConsultas()
+	{
+		Consultas = await consultaService.GetAllConsultas(LoggedInUserId);
+
+		onlyActiveConsultas = false;
+	}
+
+	private async Task GetAllActiveConsultas()
+	{
+		await GetAllConsultas();
+
+		if (Consultas is not null)
+		{
+			Consultas = Consultas.Where(x => x.Data > DateTime.Today).OrderBy(x => x.Data).ToList();
+
+			onlyActiveConsultas = true;
+		}
+	}
+}

@@ -1,6 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[spConsulta_GetAll]
-	@ClinicaId uniqueidentifier,
-	@PacienteId uniqueidentifier
+	@ClinicaId uniqueidentifier
 AS
 BEGIN
 	SELECT * FROM dbo.[Consultas]

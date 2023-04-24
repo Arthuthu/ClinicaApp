@@ -41,6 +41,8 @@ public class ConsultaRepository : IConsultaRepository
             consulta.Id,
             consulta.Data,
             consulta.Descricao,
+            consulta.PacienteCel,
+            consulta.PacienteNome,
             consulta.CreatedDate,
             consulta.PacienteId,
             consulta.ClinicaId

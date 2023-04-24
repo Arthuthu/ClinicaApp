@@ -10,6 +10,9 @@
     <button class="index-button" @onclick=ToggleShowCadastrarPaciente>
         Cadastrar paciente
     </button>
+    <button class="index-button" @onclick=ToggleShowConsultas>
+        Consultas
+    </button>
 </div>
 
 @if (showCadastrarPaciente)
@@ -22,10 +25,16 @@
     <Pacientes />
 }
 
+@if (showConsultas)
+{
+    <ConsultasClinica />
+}
+
 @code {
     private Guid LoggedInUserId { get; set; }
     private bool showPacientesList = true;
     private bool showCadastrarPaciente = false;
+    private bool showConsultas = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -43,11 +52,20 @@
     {
         showCadastrarPaciente = !showCadastrarPaciente;
         showPacientesList = false;
+        showConsultas = false;
     }
 
     private void ToggleShowPacientes()
     {
         showPacientesList = !showPacientesList;
+        showCadastrarPaciente = false;
+        showConsultas = false;
+    }
+
+    private void ToggleShowConsultas()
+    {
+        showConsultas = !showConsultas;
+        showPacientesList = false;
         showCadastrarPaciente = false;
     }
 }
