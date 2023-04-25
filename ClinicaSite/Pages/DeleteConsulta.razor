@@ -1,0 +1,27 @@
+﻿@inject IConsultaService consultaService
+
+<div class="text-center my-4">
+	<div class="h4 fw-bold">
+		Tem certeza que deseja deletar essa consulta?
+	</div>
+	<div>
+		<button class="btn btn-warning px-4 py-2" @onclick="DeleteConsultaConfirmation">
+			Sim
+		</button>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public string? ConsultaId { get; set; }
+
+	private async Task DeleteConsultaConfirmation()
+	{
+		if (ConsultaId is not null)
+		{
+			await consultaService.DeleteConsulta(new Guid(ConsultaId!));
+		}
+	}
+
+
+}
