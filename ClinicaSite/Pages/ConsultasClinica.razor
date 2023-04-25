@@ -4,36 +4,64 @@
 
 <div class="d-flex my-4 justify-content-center">
 	<div>
-		<button class="index-button" @onclick="GetAllConsultas">
+		<button class="index-button" @onclick="GetAllConsultas" id="consultas-clinicas-button">
 			Todas as consultas
 		</button>
 	</div>
 	<div>
-		<button class="index-button" @onclick="GetAllActiveConsultas">
+		<button class="index-button" @onclick="GetAllActiveConsultas" id="consultas-clinicas-button">
 			Consultas ativas
 		</button>
 	</div>
-	<div>
-		<EditForm>
-			<button class="index-button" @onclick="GetConsultasByDateRange">
-				Pesquisar por data
-			</button>
-		</EditForm>
+</div>
 
+<div class="text-center">
+	<div class="d-flex justify-content-center">
+		<div class="mx-2">
+			<div class="h4 fw-bold">
+				De
+			</div>
+			<div>
+				<InputDate TValue="DateTime" id="firstDate"
+					class="date-input" @bind-Value="firstDate" />
+			</div>
+		</div>
+		<div class="mx-2">
+			<div class="h4 fw-bold">
+				Ate
+			</div>
+			<div>
+				<InputDate TValue="DateTime" id="secondDate"
+					 class="date-input" @bind-Value="secondDate" />
+			</div>
+		</div>
+	</div>
+	<div class="my-4">
+		<button type="submit" class="index-button" id="consultas-clinicas-button"
+				@onclick="async () => await GetConsultasByDateRange(firstDate, secondDate)">
+			Pesquisar por data
+		</button>
 	</div>
 </div>
 
-@if (onlyActiveConsultas is true)
+@if (consultaSearchType == "Ativas")
 {
-	<div class="text-center h4 my-4 text-success fw-bold">
+	<div class="text-center h4 my-4 text-info fw-bold">
 		Consultas ativas
 	</div>
 }
 
-@if (onlyActiveConsultas is false)
+@if (consultaSearchType == "Todas")
 {
-	<div class="text-center h4 my-4 text-primary fw-bold">
-		Todas as consulta
+	<div class="text-center h4 my-4 text-success fw-bold">
+		Todas as consultas
+	</div>
+}
+
+@if (consultaSearchType == "Data")
+{
+	<div class="text-center h4 my-4 text-danger fw-bold">
+		Data
 	</div>
 }
 
@@ -60,7 +88,9 @@
 	private Guid LoggedInUserId { get; set; }
 	private IList<ConsultaModel>? Consultas { get; set; }
 	private IList<PacienteModel>? Pacientes { get; set; }
-	private bool onlyActiveConsultas = true;
+	private string consultaSearchType = "Ativas";
+	private DateTime firstDate = DateTime.Today;
+	private DateTime secondDate = DateTime.Today.AddMonths(1);
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -76,9 +106,14 @@
 
 	private async Task GetAllConsultas()
 	{
-		Consultas = await consultaService.GetAllConsultas(LoggedInUserId);
+		var consultas = await consultaService.GetAllConsultas(LoggedInUserId);
 
-		onlyActiveConsultas = false;
+		if (consultas is not null)
+		{
+			Consultas = consultas.OrderBy(x => x.Data).ToList();
+		}
+
+		consultaSearchType = "Todas";
 	}
 
 	private async Task GetAllActiveConsultas()
@@ -89,7 +124,7 @@
 		{
 			Consultas = Consultas.Where(x => x.Data > DateTime.Today).OrderBy(x => x.Data).ToList();
 
-			onlyActiveConsultas = true;
+			consultaSearchType = "Ativas";
 		}
 	}
 
@@ -99,7 +134,10 @@
 
 		if (Consultas is not null)
 		{
-			Consultas = Consultas.Where(x => x.Data > firstDate && x.Data < secondDate).ToList();
+			Consultas = Consultas.Where(x => x.Data > firstDate && x.Data < secondDate)
+			.OrderBy(x => x.Data).ToList();
+
+			consultaSearchType = "Data";
 		}
 	}
 }

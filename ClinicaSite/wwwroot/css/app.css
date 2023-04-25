@@ -486,3 +486,10 @@
 #historico-consultas-button {
     padding: 16px;
 }
+
+
+/* Consultas Clinicas */
+
+#consultas-clinicas-button {
+    background-image: linear-gradient(#007695, #0095BD);
+}
