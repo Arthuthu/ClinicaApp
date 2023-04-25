@@ -2,6 +2,10 @@
     --main-background-color: #1BA300;
 }
 
+body,html {
+    margin: 0;
+}
+
 /* Navbar */
 
 .navbar {
@@ -287,6 +291,8 @@
 .index-buttons-div {
     text-align: center;
     margin: 20px 0;
+    border-bottom: solid #1BA300;
+    padding-bottom: 20px;
 }
 
 .index-button {
@@ -491,5 +497,10 @@
 /* Consultas Clinicas */
 
 #consultas-clinicas-button {
-    background-image: linear-gradient(#007695, #0095BD);
+    background-color: #007695;
+}
+
+#consultas-clinicas-button:hover {
+    transition: 500ms;
+    background-color: #0095BD;
 }
