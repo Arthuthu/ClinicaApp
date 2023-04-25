@@ -57,8 +57,7 @@ public class PacienteService : IPacienteService
 	{
 		var data = new FormUrlEncodedContent(new[]
 		{
-			new KeyValuePair<string, string>("nome", paciente.Nome),
-			new KeyValuePair<string, string>("sobrenome", paciente.Sobrenome),
+			new KeyValuePair<string, string>("nomecompleto", paciente.NomeCompleto),
 			new KeyValuePair<string, string>("cpf", paciente.CPF),
 			new KeyValuePair<string, string>("cep", paciente.CEP),
 			new KeyValuePair<string, string>("estado", paciente.Estado),
@@ -89,8 +88,7 @@ public class PacienteService : IPacienteService
 		var data = new FormUrlEncodedContent(new[]
 		{
 			new KeyValuePair<string, string>("id", paciente.Id.ToString()),
-			new KeyValuePair<string, string>("nome", paciente.Nome),
-			new KeyValuePair<string, string>("sobrenome", paciente.Sobrenome),
+			new KeyValuePair<string, string>("nomecompleto", paciente.NomeCompleto),
 			new KeyValuePair<string, string>("cpf", paciente.CPF),
 			new KeyValuePair<string, string>("cep", paciente.CEP),
 			new KeyValuePair<string, string>("estado", paciente.Estado),

@@ -48,7 +48,7 @@
 <Virtualize Items="@PacientesList" Context="paciente" OverscanCount="50">
     <a class="pacientes-box" href="/pacientedetails/@paciente.Id">
         <div class="paciente-nome-div">
-            @paciente.Nome @paciente.Sobrenome
+            @paciente.NomeCompleto
         </div>
         <div class="cpf-createddate-div">
             <div class="paciente-cpf-div">
@@ -84,6 +84,6 @@
     {
         var pacientes = await pacienteService.GetAllPacientes(LoggedInUserId);
 
-        PacientesList = pacientes?.Where(x => x.Nome!.ToLower().Contains(name.ToLower())).ToList();
+        PacientesList = pacientes?.Where(x => x.NomeCompleto!.ToLower().Contains(name.ToLower())).ToList();
     }
 }

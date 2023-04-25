@@ -228,22 +228,22 @@ body,html {
 }
 
 .cadastro-input,
-.nome-sobrenome-input {
+.nome-completo-input {
     width: 98%;
     margin: 10px 0;
     font-size: 20px;
     padding: 4px;
 }
 
-.nome-sobrenome-input {
+.nome-completo-input {
     width: 80%;
 }
 
-.nome-sobrenome-input-div {
+.nome-completo-input-div {
     width: 80%;
 }
 
-.nome-sobrenome-input-main-div {
+.nome-completo-input-main-div {
     display: flex;
     justify-content: space-evenly;
     margin: 0 0 20px 0;

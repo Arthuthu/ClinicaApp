@@ -1,7 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[spPaciente_Update]
 @Id uniqueidentifier,
-@Nome nvarchar(50),
-@Sobrenome nvarchar(50),
+@NomeCompleto nvarchar(100),
 @CPF nvarchar(15),
 @CEP nvarchar(12),
 @Estado nvarchar(20),
@@ -15,6 +14,6 @@
 AS
 BEGIN
 UPDATE dbo.[Pacientes]
-SET Nome = @Nome, Sobrenome = @Sobrenome, CPF = @CPF, CEP = @CEP, Estado = @Estado, Cidade = @Cidade, Bairro = @Bairro, Rua = @Rua,  NumeroRua = @NumeroRua, Email = @Email, Cel = @Cel, UpdatedDate = @UpdatedDate
+SET NomeCompleto = @NomeCompleto, CPF = @CPF, CEP = @CEP, Estado = @Estado, Cidade = @Cidade, Bairro = @Bairro, Rua = @Rua,  NumeroRua = @NumeroRua, Email = @Email, Cel = @Cel, UpdatedDate = @UpdatedDate
 WHERE Id = @Id
 END

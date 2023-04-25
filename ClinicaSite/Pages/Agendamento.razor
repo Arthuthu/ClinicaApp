@@ -7,7 +7,7 @@
 @if (isInitialized)
 {
     <div class="text-center fw-bold h4 my-4">
-        Agende uma consulta para @Paciente!.Nome @Paciente.Sobrenome
+        Agende uma consulta para @Paciente!.NomeCompleto
     </div>
 
     @if (PacienteHasActiveConsulta is true)
@@ -182,7 +182,7 @@
         Consulta.Data = Consulta.Data.AddHours(hora);
         Consulta.Data = Consulta.Data.AddMinutes(minutos);
         Consulta.PacienteCel = Paciente!.Cel;
-        Consulta.PacienteNome = $"{Paciente.Nome} {Paciente.Sobrenome}";
+        Consulta.PacienteNome = Paciente.NomeCompleto;
         Consulta.ClinicaId = LoggedInUserId;
         Consulta.PacienteId = Paciente!.Id;
     }

@@ -1,7 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[spPaciente_Add]
 	@Id uniqueidentifier,
-	@Nome nvarchar(50),
-	@Sobrenome nvarchar(50),
+	@NomeCompleto nvarchar(100),
 	@CPF nvarchar(15),
 	@CEP nvarchar(12),
 	@Estado nvarchar(20),
@@ -15,6 +14,6 @@
 	@ClinicaId uniqueidentifier
 AS
 BEGIN
-	INSERT INTO dbo.[Pacientes] (Id, Nome, Sobrenome, CPF, CEP, Estado, Cidade, Rua, Bairro, NumeroRua, Email, Cel, CreatedDate, ClinicaId)
-	VALUES (@Id, @Nome, @Sobrenome, @CPF, @CEP, @Estado, @Cidade, @Rua, @Bairro, @NumeroRua, @Email, @Cel, @CreatedDate, @ClinicaId);
+	INSERT INTO dbo.[Pacientes] (Id, NomeCompleto, CPF, CEP, Estado, Cidade, Rua, Bairro, NumeroRua, Email, Cel, CreatedDate, ClinicaId)
+	VALUES (@Id, @NomeCompleto, @CPF, @CEP, @Estado, @Cidade, @Rua, @Bairro, @NumeroRua, @Email, @Cel, @CreatedDate, @ClinicaId);
 END

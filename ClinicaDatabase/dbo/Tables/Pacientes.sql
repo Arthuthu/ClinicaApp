@@ -1,8 +1,7 @@
 ﻿CREATE TABLE [dbo].[Pacientes]
 (
 	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
-    [Nome] NVARCHAR(50) NOT NULL,
-    [Sobrenome] NVARCHAR(50) NULL, 
+    [NomeCompleto] NVARCHAR(100) NOT NULL,
     [CPF] NVARCHAR(16) NULL, 
     [CEP] NVARCHAR(12) NULL, 
     [Estado] NVARCHAR(20) NULL, 

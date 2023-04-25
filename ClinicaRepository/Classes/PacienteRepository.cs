@@ -40,8 +40,8 @@ public class PacienteRepository : IPacienteRepository
 	public async Task<PacienteModel?> GetPacientesByName(PacienteModel paciente)
 	{
 		var results = await _db.LoadData<PacienteModel, dynamic>(
-			"dbo.spPaciente_GetByName",
-			new { Username = paciente.Nome });
+			"dbo.spPaciente_GetByNome",
+			new { NomeCompleto = paciente.NomeCompleto });
 
 		return results.FirstOrDefault();
 	}
@@ -52,8 +52,7 @@ public class PacienteRepository : IPacienteRepository
 		new
 		{
             paciente.Id,
-            paciente.Nome,
-            paciente.Sobrenome,
+            paciente.NomeCompleto,
             paciente.CPF,
             paciente.CEP,
             paciente.Estado,
@@ -73,8 +72,7 @@ public class PacienteRepository : IPacienteRepository
 		return _db.SaveData("dbo.spPaciente_Update", new
 		{
             paciente.Id,
-            paciente.Nome,
-            paciente.Sobrenome,
+            paciente.NomeCompleto,
             paciente.CPF,
             paciente.CEP,
             paciente.Estado,
