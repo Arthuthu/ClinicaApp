@@ -119,6 +119,29 @@
 		</div>
 	</div>
 
+	@if (Consulta is not null)
+	{
+		<div class="text-center my-4">
+			<div>
+				<button class="btn btn-warning fw-bold mb-4" @onclick=ToggleShowDeletarConsultaConfirmation>
+					Deletar consulta ativa
+				</button>
+			</div>
+
+			@if (showDeletarConsultaConfirmation)
+			{
+				<div class="mb-2 h5 fw-bold">
+					Deseja deletar a consulta ativa do paciente?
+				</div>
+				<div>
+					<button class="btn btn-danger fw-bold" @onclick=DeleteConsultaAtiva>
+						Sim
+					</button>
+				</div>
+			}
+		</div>
+	}
+
 	@if (showHistoricoConsultas)
 	{
 		<div class="my-4">
@@ -159,6 +182,7 @@
 	private ConsultaModel? Consulta { get; set; }
 	private List<ConsultaModel>? Consultas { get; set; }
 	private bool showHistoricoConsultas = false;
+	private bool showDeletarConsultaConfirmation = false;
 	private bool isInitialized = false;
 
 	protected override async Task OnInitializedAsync()
@@ -213,10 +237,22 @@
 		}
 	}
 
+	private async Task DeleteConsultaAtiva()
+	{
+		await consultaService.DeleteConsulta(Consulta!.Id);
+
+		navManager.NavigateTo($"/pacientedetails/{Paciente!.Id}", true);
+	}
+
 	//Toggles
 
 	private void ToggleShowHistoricoConsultas()
 	{
 		showHistoricoConsultas = !showHistoricoConsultas;
+	}
+
+	private void ToggleShowDeletarConsultaConfirmation()
+	{
+		showDeletarConsultaConfirmation = !showDeletarConsultaConfirmation;
 	}
 }
