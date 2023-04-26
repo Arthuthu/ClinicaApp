@@ -1,6 +1,7 @@
 ﻿@inject IPacienteService pacienteService
 @inject IConsultaService consultaService
 @inject IUserDataService userDataService
+@inject NavigationManager navManager
 
 @if (Consultas is not null)
 {
@@ -10,11 +11,35 @@
 	<Virtualize Items="Consultas" Context="consulta" OverscanCount="20">
 		<div class="historico-consultas-box">
 			<div>
-				@consulta.Data
+				<div>
+					@consulta.Data
+				</div>
+				<div>
+					@consulta.Descricao
+				</div>
 			</div>
-			<div>
-				@consulta.Descricao
+			<div class="mt-4">
+				<div class="mb-2">
+					<button class="btn btn-primary" @onclick="() => ToggleShowConsultaEditing(consulta.Id)">
+						Editar
+					</button>
+				</div>
 			</div>
+			@if (showConsultaEditing.ContainsKey(consulta.Id) && showConsultaEditing[consulta.Id])
+			{
+				<div class="text-center mb-4">
+					<div>
+						<InputTextArea id="descricao" @bind-Value="descricao"
+				  placeholder="Digite uma descrição (Não obrigatório)" class="textarea-input" />
+					</div>
+					<div>
+						<button class="btn btn-info"
+						@onclick="async () => await EditarDescricaoConsulta(consulta.Id, descricao)">
+							Salvar
+						</button>
+					</div>
+				</div>
+			}
 		</div>
 	</Virtualize>
 }
@@ -25,6 +50,9 @@
 	private Guid LoggedInUserId { get; set; }
 	private PacienteModel? Paciente { get; set; }
 	private IList<ConsultaModel>? Consultas { get; set; }
+	private ConsultaModel? Consulta { get; set; }
+	private Dictionary<Guid, bool> showConsultaEditing = new Dictionary<Guid, bool>();
+	private string descricao = "";
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -34,6 +62,29 @@
 		if (Paciente is not null)
 		{
 			Consultas = await consultaService.GetConsultasByPacienteId(LoggedInUserId, Paciente.Id);
+		}
+	}
+
+	private async Task EditarDescricaoConsulta(Guid consultaId, string descricao)
+	{
+		Consulta = await consultaService.GetConsultaById(consultaId);
+		Consulta.ClinicaId = LoggedInUserId;
+		Consulta.Descricao = descricao;
+
+		await consultaService.UpdateConsulta(Consulta);
+
+		navManager.NavigateTo($"/pacientedetails/{PacienteId}", true);
+	}
+
+	private void ToggleShowConsultaEditing(Guid consultaId)
+	{
+		if (showConsultaEditing.ContainsKey(consultaId))
+		{
+			showConsultaEditing[consultaId] = !showConsultaEditing[consultaId];
+		}
+		else
+		{
+			showConsultaEditing[consultaId] = true;
 		}
 	}
 }

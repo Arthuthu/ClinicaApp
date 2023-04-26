@@ -2,6 +2,7 @@
 
 public class ConsultaRequest
 {
+    public Guid Id { get; set; }
     public DateTime Data { get; set; }
     public string? Descricao { get; set; }
     public string? PacienteCel { get; set; }

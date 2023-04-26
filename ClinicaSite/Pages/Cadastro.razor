@@ -10,7 +10,7 @@
 	</div>
 }
 
-<EditForm Model="model" OnValidSubmit="ExecuteCadastro">
+<EditForm Model="Paciente" OnValidSubmit="ExecuteCadastro">
 	<div>
 		<div class="cadastrar-cliente-label">
 			<p>Cadastrar cliente</p>
@@ -27,24 +27,24 @@
 				<label for="nome" class="visually-hidden">Nome</label>
 				<div class="nome-completo-input-main-div">
 					<div class="nome-completo-input-div">
-						<InputText id="nome" class="nome-completo-input" @bind-Value="model.NomeCompleto" placeholder="Nome Completo" />
+						<InputText id="nome" class="nome-completo-input" @bind-Value="Paciente.NomeCompleto" placeholder="Nome Completo" />
 					</div>
 				</div>
 
 				<div class="cpf-cel-email-main-div">
 					<div class="cpf-cel-email-div">
 						<label for="cpf" class="visually-hidden">CPF</label>
-						<InputText id="cpf" class="cadastro-input" @bind-Value="model.CPF" placeholder="CPF" />
+						<InputText id="cpf" class="cadastro-input" @bind-Value="Paciente.CPF" placeholder="CPF" />
 					</div>
 
 					<div class="cpf-cel-email-div">
 						<label for="cel" class="visually-hidden">Celular</label>
-						<InputText id="cel" class="cadastro-input" @bind-Value="model.Cel" placeholder="Celular" />
+						<InputText id="cel" class="cadastro-input" @bind-Value="Paciente.Cel" placeholder="Celular" />
 					</div>
 
 					<div class="cpf-cel-email-div">
 						<label for="email" class="visually-hidden">Email</label>
-						<InputText id="email" class="cadastro-input" @bind-Value="model.Email" placeholder="Email" />
+						<InputText id="email" class="cadastro-input" @bind-Value="Paciente.Email" placeholder="Email" />
 					</div>
 				</div>
 			</div>
@@ -56,34 +56,34 @@
 				<div class="cep-estado-cidade-div">
 					<div class="endereco-input">
 						<label for="cep" class="visually-hidden">CEP</label>
-						<InputText id="cep" class="cadastro-input" @bind-Value="model.CEP" placeholder="CEP" />
+						<InputText id="cep" class="cadastro-input" @bind-Value="Paciente.CEP" placeholder="CEP" />
 					</div>
 
 					<div class="endereco-input">
 						<label for="estado" class="visually-hidden">Estado</label>
-						<InputText id="estado" class="cadastro-input" @bind-Value="model.Estado" placeholder="Estado" />
+						<InputText id="estado" class="cadastro-input" @bind-Value="Paciente.Estado" placeholder="Estado" />
 					</div>
 
 					<div class="endereco-input">
 						<label for="cidade" class="visually-hidden">Cidade</label>
-						<InputText id="cidade" class="cadastro-input" @bind-Value="model.Cidade" placeholder="Cidade" />
+						<InputText id="cidade" class="cadastro-input" @bind-Value="Paciente.Cidade" placeholder="Cidade" />
 					</div>
 				</div>
 
 				<div class="bairro-rua-numero">
 					<div class="endereco-input">
 						<label for="bairro" class="visually-hidden">Bairro</label>
-						<InputText id="bairro" class="cadastro-input" @bind-Value="model.Bairro" placeholder="Bairro" />
+						<InputText id="bairro" class="cadastro-input" @bind-Value="Paciente.Bairro" placeholder="Bairro" />
 					</div>
 
 					<div class="endereco-input">
 						<label for="rua" class="visually-hidden">Rua</label>
-						<InputText id="rua" class="cadastro-input" @bind-Value="model.Rua" placeholder="Rua" />
+						<InputText id="rua" class="cadastro-input" @bind-Value="Paciente.Rua" placeholder="Rua" />
 					</div>
 
 					<div class="endereco-input">
 						<label for="numerorua" class="visually-hidden">NumeroRua</label>
-						<InputText id="numerorua" class="cadastro-input" @bind-Value="model.NumeroRua" placeholder="Numero Rua" />
+						<InputText id="numerorua" class="cadastro-input" @bind-Value="Paciente.NumeroRua" placeholder="Numero Rua" />
 					</div>
 				</div>
 			</div>
@@ -96,7 +96,7 @@
 </EditForm>
 
 @code {
-	private PacienteModel model = new();
+	private PacienteModel Paciente = new();
 	private Guid LoggedInUserId { get; set; }
 	private string? ErrorMessages = "";
 	private bool ShowErrorMessages = false;
@@ -113,15 +113,15 @@
 
 	private async Task ExecuteCadastro()
 	{
-		model.ClinicaId = LoggedInUserId;
-		ErrorMessages = await pacienteService.RegisterPaciente(model);
+		Paciente.ClinicaId = LoggedInUserId;
+		ErrorMessages = await pacienteService.RegisterPaciente(Paciente);
 
 		if (ErrorMessages == "Paciente criado com sucesso")
 		{
 			ShowErrorMessages = true;
 			await Task.Delay(1000);
 
-			navManager.NavigateTo("/");
+			navManager.NavigateTo("/", true);
 		}
 
 		ShowErrorMessages = true;

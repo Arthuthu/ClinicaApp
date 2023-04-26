@@ -149,7 +149,7 @@
 
 		if (Consultas is not null)
 		{
-			Consultas = Consultas.Where(x => x.Data > DateTime.Today).OrderBy(x => x.Data).ToList();
+			Consultas = Consultas.Where(x => x.Data > DateTime.Now).OrderBy(x => x.Data).ToList();
 
 			consultaSearchType = "Ativas";
 		}
