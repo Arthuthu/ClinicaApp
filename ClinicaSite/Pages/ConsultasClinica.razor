@@ -13,6 +13,11 @@
 			Consultas ativas
 		</button>
 	</div>
+	<div>
+		<button class="index-button" @onclick="GetTodaysConsulta" id="consultas-clinicas-button">
+			Consulta de Hoje
+		</button>
+	</div>
 </div>
 
 <div class="text-center">
@@ -62,6 +67,13 @@
 {
 	<div class="text-center h4 my-4 text-danger fw-bold">
 		Data
+	</div>
+}
+
+@if (consultaSearchType == "Hoje")
+{
+	<div class="text-center h4 my-4 text-primary fw-bold">
+		Hoje
 	</div>
 }
 
@@ -165,6 +177,18 @@
 			.OrderBy(x => x.Data).ToList();
 
 			consultaSearchType = "Data";
+		}
+	}
+
+	private async Task GetTodaysConsulta()
+	{
+		await GetAllConsultas();
+
+		if (Consultas is not null)
+		{
+			Consultas = Consultas.Where(x => x.Data.Date == DateTime.Today).ToList();
+
+			consultaSearchType = "Hoje";
 		}
 	}
 
