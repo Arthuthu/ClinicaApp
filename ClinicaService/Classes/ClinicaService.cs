@@ -80,7 +80,7 @@ public class ClinicaClassService : IClinicaClassService
 	{
 		return _clinicaRepository.DeleteClinica(id);
 	}
-	public async Task<string> Login(ClinicaModel clinica)
+	public async Task<string?> Login(ClinicaModel clinica)
 	{
 		bool verifyClinica = await VerifyIfClinicaAlreadyExists(clinica);
 
@@ -98,10 +98,15 @@ public class ClinicaClassService : IClinicaClassService
 
 		var requestedLogInUser = await _clinicaRepository.GetClinicaByName(clinica);
 
+		if (requestedLogInUser is null)
+		{
+			return null;
+		}
+
 		bool verifyPasswordHash = await VerifyPasswordHash(
-			requestedLogInUser.Password,
-			requestedLogInUser.PasswordHash,
-			requestedLogInUser.PasswordSalt);
+			requestedLogInUser.Password!,
+			requestedLogInUser.PasswordHash!,
+			requestedLogInUser.PasswordSalt!);
 
 		if (verifyPasswordHash is false)
 		{
@@ -132,6 +137,11 @@ public class ClinicaClassService : IClinicaClassService
 	private async Task<bool> VerifyIfPasswordIsCorrect(ClinicaModel clinica)
 	{
 		var requestedClinica = await _clinicaRepository.GetClinicaByName(clinica);
+
+		if (requestedClinica is null)
+		{
+			return false;
+		}
 
 		if (requestedClinica.Password == clinica.Password)
 		{

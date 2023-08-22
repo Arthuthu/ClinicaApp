@@ -7,7 +7,6 @@
         <div class="pacientes-search-input-div">
             <InputText class="pacientes-search-input" @bind-Value="@PacienteName" placeholder="Procurar por Nome" />
         </div>
-
         <div>
             <button @onclick="async () => await GetPacienteByName(PacienteName)"
                     class="first-style-button" id="pacientes-buscar-button">
@@ -20,43 +19,37 @@
         <div class="pacientes-search-input-div">
             <InputText class="pacientes-search-input" @bind-Value="@PacienteCPF" placeholder="Procurar por CPF" />
         </div>
-
         <div>
             <button @onclick="async () => await GetPacienteByCPF(PacienteCPF)"
-                    class="first-style-button" id="pacientes-buscar-button">
+                class="first-style-button" id="pacientes-buscar-button">
                 Buscar
             </button>
         </div>
     </div>
 </div>
 
-<div class="pacientes-label">
-    <div class="nome-label">
+<div class="pacientes-label-div">
+    <div>
         Nome
     </div>
-    <div class="cpf-cadastrado-div">
-        <div class="cpf-label">
-            CPF
-        </div>
-
-        <div>
-            Cadastrado
-        </div>
+    <div>
+        CPF
+    </div>
+    <div>
+        Cadastrado
     </div>
 </div>
 
 <Virtualize Items="@PacientesList" Context="paciente" OverscanCount="50">
     <a class="pacientes-box" href="/pacientedetails/@paciente.Id">
-        <div class="paciente-nome-div">
+        <div class="ml-1">
             @paciente.NomeCompleto
         </div>
-        <div class="cpf-createddate-div">
-            <div class="paciente-cpf-div">
-                @paciente.CPF
-            </div>
-            <div>
-                @paciente.CreatedDate.ToString("d")
-            </div>
+        <div>
+            @paciente.CPF
+        </div>
+        <div>
+            @paciente.CreatedDate.ToString("d")
         </div>
     </a>
 </Virtualize>

@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{cc91fb91-321a-47da-85c4-f491e5867b85}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -63,6 +63,7 @@
     <Folder Include="dbo\StoredProcedures\Clinica" />
     <Folder Include="dbo\StoredProcedures\Paciente" />
     <Folder Include="dbo\StoredProcedures\Consulta" />
+    <Folder Include="Publish\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Pacientes.sql" />
@@ -90,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishLocations\ClinicaDatabase.publish.xml" />
+    <None Include="Publish\ClinicaDatabase.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ClinicaDatabase.refactorlog" />

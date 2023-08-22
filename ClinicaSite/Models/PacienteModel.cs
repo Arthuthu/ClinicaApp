@@ -3,16 +3,16 @@
     public class PacienteModel
     {
         public Guid Id { get; set; }
-        public string NomeCompleto { get; set; }
-        public string CPF { get; set; }
-        public string CEP { get; set; }
-        public string Estado { get; set; }
-        public string Cidade { get; set; }
-        public string Rua { get; set; }
-        public string Bairro { get; set; }
-        public string NumeroRua { get; set; }
-        public string Email { get; set; }
-        public string Cel { get; set; }
+        public string NomeCompleto { get; set; } = string.Empty;
+        public string CPF { get; set; } = string.Empty;
+        public string CEP { get; set; } = string.Empty;
+        public string Estado { get; set; } = string.Empty;
+        public string Cidade { get; set; } = string.Empty;
+        public string Rua { get; set; } = string.Empty;
+        public string Bairro { get; set; } = string.Empty;
+        public string NumeroRua { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Cel { get; set; } = string.Empty;
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
 

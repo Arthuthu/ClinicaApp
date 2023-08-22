@@ -2,12 +2,13 @@
     --main-background-color: #1BA300;
 }
 
-body,html {
+body, html {
     margin: 0;
+    background-image: url('../images/wallpaper.png');
+    background-repeat: no-repeat;
 }
 
 /* Navbar */
-
 .navbar {
     background-color: var(--main-background-color);
     display: flex;
@@ -303,6 +304,7 @@ body,html {
     font-weight: bold;
     text-decoration: none;
     border-color: transparent;
+    border-radius: 20px;
     margin: 0 3px;
 }
 
@@ -316,7 +318,6 @@ body,html {
 
 .pacientes-search-div {
     background-color: var(--main-background-color);
-    border-radius: 10px;
     border-color: transparent;
     padding: 10px;
 }
@@ -338,36 +339,23 @@ body,html {
     width: 100%;
 }
 
-.pacientes-label {
+.pacientes-label-div {
     display: flex;
+    justify-content: space-between;
     font-weight: bold;
     font-size: 25px;
     background-color: var(--main-background-color);
     color: #FFF;
-    margin: 20px 0 0 0;
-    padding: 25px 0;
-}
-
-.nome-label {
-    width: 60%;
-    margin-left: 10px;
-}
-
-.cpf-cadastrado-div {
-    display: flex;
-}
-
-.cpf-label {
-    margin-right: 245%;
-    margin-left: 25px
+    margin-top: 20px;
+    padding: 20px;
 }
 
 .pacientes-box {
     display: flex;
+    justify-content: space-between;
     font-size: 20px;
-    padding: 10px 0;
-    border: solid #808080;
-    border-top: transparent;
+    padding: 20px;
+    border: 5px solid #0ABC25;
     text-decoration: none;
     color: #000;
 }
@@ -377,19 +365,6 @@ body,html {
         background-color: #C2C2C2;
         transition: 500ms;
     }
-
-.paciente-nome-div {
-    width: 60%;
-    margin-left: 10px;
-}
-
-.cpf-createddate-div {
-    display: flex;
-}
-
-.paciente-cpf-div {
-    margin-right: 215%;
-}
 
 #pacientes-buscar-button {
     border-radius: 0px;
